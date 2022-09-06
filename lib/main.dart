@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Sizer(builder: (BuildContext context, Orientation orientation, DeviceType deviceType) {
-      Get.find<MostPopularController>().getMostPopularLit();
+      Get.find<MostPopularController>().getMostPopularList();
       Get.find<RecommendedController>().getRecommendedList();
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
