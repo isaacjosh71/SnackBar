@@ -7,10 +7,10 @@ import 'package:snack_bar/screens/splash.dart';
 import 'package:sizer/sizer.dart';
 import 'data/controllers/most_popular_ctlr.dart';
 import 'data/controllers/recommended_ctlr.dart';
-import 'helpers/router.dart' as router;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:snack_bar/helpers/dependency.dart' as dep;
+import 'helpers/router.dart';
 
 
 void main() async {
@@ -34,8 +34,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Acme',
         ),
-        // initialRoute: ,
-        // getPages: [],
+        initialRoute: RouteHelper.initial,
+        getPages: RouteHelper.routes,
         home: const RootApp(),
       );
     },);

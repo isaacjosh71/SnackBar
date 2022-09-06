@@ -15,7 +15,7 @@ class DishCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.92,
+      height: MediaQuery.of(context).size.height * 1.16,
       child: GetBuilder<RecommendedController>(builder:(recommendedC){
         return recommendedC.isLoaded?
         GestureDetector(
@@ -62,7 +62,7 @@ class DishCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                   color: Color(0xFF2B3849),
-                                  fontSize: 17,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(
@@ -78,7 +78,7 @@ class DishCard extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              height: 15,
+                              height: 17,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.center,

@@ -11,7 +11,7 @@ class LogIn extends StatelessWidget {
       backgroundColor: Colors.white,
       body:
       SafeArea(
-        minimum: const EdgeInsets.only(top: 150),
+        minimum: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
         child: SingleChildScrollView(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

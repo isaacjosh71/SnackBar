@@ -49,7 +49,7 @@ class _StoreCardState extends State<StoreCard> {
         height: _height,
         child: GestureDetector(
           onTap: (){
-            Get.toNamed(RouteHelper.getMostPopular());
+            Get.to(const MostPopular());
           },
           child: PageView.builder(
             controller: pageController,

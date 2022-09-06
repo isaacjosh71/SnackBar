@@ -86,13 +86,13 @@ class _SlideState extends State<Slide> {
                                 contents[i].image,
                                 height: MediaQuery.of(context).size.height * 0.225),
                             SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.035),
+                                height: MediaQuery.of(context).size.height * 0.03),
                             Text(
                               contents[i].text,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Colors.black87,
-                                fontSize:28,
+                                fontSize:25,
                               ),),
                             SizedBox(
                                 height: MediaQuery.of(context).size.height * 0.02),
@@ -101,10 +101,10 @@ class _SlideState extends State<Slide> {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Colors.black54,
-                                fontSize: 18,
+                                fontSize: 16,
                               ),),
                             SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.07),
+                                height: MediaQuery.of(context).size.height * 0.035),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children:
@@ -117,7 +117,7 @@ class _SlideState extends State<Slide> {
                     }),
               ),
                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.04),
+                  height: MediaQuery.of(context).size.height * 0.03),
               Container(
                 height: MediaQuery.of(context).size.height * 0.055,
                 width: MediaQuery.of(context).size.width * 0.5,
@@ -130,8 +130,7 @@ class _SlideState extends State<Slide> {
                       ]),
                 ),
                 child: GestureDetector(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    child: Center(
                       child: Text( currentIndex == contents.length -1
                           ? 'Get Started' : 'Next',
                         textAlign: TextAlign.center,
@@ -148,7 +147,7 @@ class _SlideState extends State<Slide> {
                     }),
               ),
               SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.025),
+                  height: MediaQuery.of(context).size.height * 0.02),
               AnimatedTextKit(
                 animatedTexts: [
                   TyperAnimatedText('Your Favorite Hunger Companion',
@@ -160,7 +159,7 @@ class _SlideState extends State<Slide> {
                 repeatForever: true,
               ),
               SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03),
+                  height: MediaQuery.of(context).size.height * 0.02),
             ],
           ),
       ),

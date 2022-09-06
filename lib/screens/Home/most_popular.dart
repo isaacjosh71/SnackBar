@@ -1,6 +1,9 @@
 
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:snack_bar/screens/root_app.dart';
 import '../../helpers/picker.dart';
 
 class MostPopular extends StatefulWidget {
@@ -22,6 +25,18 @@ class _MostPopularState extends State<MostPopular> {
             automaticallyImplyLeading: false,
             toolbarHeight: 60,
             elevation:3,
+            leading: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.white70,
+                  size: 24,
+                ),
+                onPressed: () {
+                  Get.to(()=> const RootApp());
+                },),
+            ),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 10),
