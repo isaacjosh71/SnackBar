@@ -94,7 +94,7 @@ class _StoreCardState extends State<StoreCard> {
         width: MediaQuery.of(context).size.width * 0.9,
         margin: const EdgeInsets.only(left: 5, right: 5),
         decoration: BoxDecoration(
-          color: const Color(0xFFFFFFFF),
+          color: const Color(0xFFFFFFFA),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(

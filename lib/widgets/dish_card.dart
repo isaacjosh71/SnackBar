@@ -15,7 +15,7 @@ class DishCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.87,
+      height: MediaQuery.of(context).size.height * 0.92,
       child: GetBuilder<RecommendedController>(builder:(recommendedC){
         return recommendedC.isLoaded?
         GestureDetector(
@@ -29,10 +29,10 @@ class DishCard extends StatelessWidget {
               itemBuilder: (context, index){
                 return Container(
                   width: MediaQuery.of(context).size.width * 0.80,
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.2,
                   margin: const EdgeInsets.only(left: 10, right: 10, top: 10,bottom: 10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFFFFF),
+                    color: const Color(0xFFFFFFFA),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(

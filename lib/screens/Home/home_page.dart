@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.985),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(65),
       child: AppBar(
