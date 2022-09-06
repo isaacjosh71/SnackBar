@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "172451984940",
+    "project_id": "snackbar-55a9e",
+    "storage_bucket": "snackbar-55a9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172451984940:android:e5686f864ad70a25668389",
+        "android_client_info": {
+          "package_name": "com.example.snack_bar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172451984940-pt2qim68k19ufdj0ig75ltvl1jttgv62.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUuQQ1F77nkeiwb3hnPQBdIenaVnhWqB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172451984940-pt2qim68k19ufdj0ig75ltvl1jttgv62.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
