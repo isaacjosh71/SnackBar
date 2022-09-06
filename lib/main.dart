@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: 'Acm',
+          fontFamily: 'Acme',
         ),
         // initialRoute: ,
         // getPages: [],
