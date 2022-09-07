@@ -10,16 +10,20 @@ class RouteHelper{
   static const String recommended = '/recommended';
 
   static String getInitial()=> '$initial';
-  static String getMostPopular()=> '$mostPopular';
-  static String getRecommended()=> '$recommended';
+  static String getMostPopular(int pageId)=> '$mostPopular?pageId=$pageId';
+  static String getRecommended(int pageId)=> '$recommended?pageId=$pageId';
 
   static List<GetPage> routes =[
     GetPage(name: initial, page: ()=>const RootApp()),
+
     GetPage(name: mostPopular, page: (){
-      return const MostPopular();
+      var pageId = Get.parameters['pageId'];
+      return MostPopular(pageId:int.parse(pageId!));
     }, transition: Transition.fadeIn),
+
     GetPage(name: recommended, page: (){
-      return const Recommended();
+      var pageId = Get.parameters['pageId'];
+      return Recommended(pageId:int.parse(pageId!));
     }, transition: Transition.fadeIn),
   ];
 }

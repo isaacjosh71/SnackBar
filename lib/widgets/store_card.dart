@@ -47,17 +47,12 @@ class _StoreCardState extends State<StoreCard> {
       return mostPopularC.isLoaded?
       SizedBox(
         height: _height,
-        child: GestureDetector(
-          onTap: (){
-            Get.to(const MostPopular());
+        child: PageView.builder(
+          controller: pageController,
+          itemCount: mostPopularC.mostPopularList.length,
+          itemBuilder: (BuildContext context, position) {
+            return _buildStoreCard(position, mostPopularC.mostPopularList[position]);
           },
-          child: PageView.builder(
-            controller: pageController,
-            itemCount: mostPopularC.mostPopularList.length,
-            itemBuilder: (BuildContext context, position) {
-              return _buildStoreCard(position, mostPopularC.mostPopularList[position]);
-            },
-          ),
         ),
       )
           :Center(child: CircularProgressIndicator(
@@ -90,79 +85,84 @@ class _StoreCardState extends State<StoreCard> {
     }
     return Transform(
       transform: matrix4,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        margin: const EdgeInsets.only(left: 5, right: 5),
-        decoration: BoxDecoration(
-          color: const Color(0xFFFFFFFA),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  height: MediaQuery.of(context).size.height * 0.21,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10)),
-                    child: Image.network(
-                      AppConstants.BASE_URL+"/uploads/"+mostPopularC.img!,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-            ),
-            Container(
-              padding: const EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    mostPopularC.name!,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: Color(0xFF2B3849),
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    mostPopularC.location!,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xFF55606D),
-                      fontSize:13,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.alarm, size: 17),
-                      SizedBox(
-                        width: 5,
+      child: GestureDetector(
+        onTap: (){
+          Get.toNamed(RouteHelper.getMostPopular(index));
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          margin: const EdgeInsets.only(left: 5, right: 5),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFFFFA),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    height: MediaQuery.of(context).size.height * 0.21,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10)),
+                      child: Image.network(
+                        AppConstants.BASE_URL+AppConstants.UPLOAD+mostPopularC.img!,
+                        fit: BoxFit.cover,
                       ),
-                      Text(
-                        '9:00am - 6:00pm',
-                        style: TextStyle(
-                            color: Colors.orange,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ],
+                    )),
               ),
-            )
-          ],
+              Container(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      mostPopularC.name!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          color: Color(0xFF2B3849),
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      mostPopularC.location!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Color(0xFF55606D),
+                        fontSize:13,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.alarm, size: 17),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '40 mins',
+                          style: TextStyle(
+                              color: Colors.orange,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -1,12 +1,14 @@
 
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-
-import '../../helpers/picker.dart';
+import 'package:get/get.dart';
+import 'package:snack_bar/helpers/app_const.dart';
+import 'package:snack_bar/helpers/router.dart';
+import '../../data/controllers/recommended_ctlr.dart';
 
 class Recommended extends StatefulWidget {
-  final dynamic dish;
-  const Recommended({Key? key, this.dish}) : super(key: key);
+  int pageId;
+  Recommended({Key? key, required this.pageId}) : super(key: key);
 
   @override
   State<Recommended> createState() => _RecommendedState();
@@ -15,6 +17,7 @@ class Recommended extends StatefulWidget {
 class _RecommendedState extends State<Recommended> {
   @override
   Widget build(BuildContext context) {
+    var productDetail = Get.find<RecommendedController>().recommendedList[widget.pageId];
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -23,6 +26,18 @@ class _RecommendedState extends State<Recommended> {
           SliverAppBar(
             toolbarHeight: 60,
             elevation:3,
+            leading: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                onPressed: () {
+                  Get.toNamed(RouteHelper.getInitial());
+                },),
+            ),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 10),
@@ -61,78 +76,6 @@ class _RecommendedState extends State<Recommended> {
                       topRight: Radius.circular(30)
                   ),
                 ),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Container(
-                          height: size.height*0.002, width: size.width * 0.3,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        widget.dish["name"] ?? "",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: const TextStyle(
-                            color: Color(0xFF2B3849),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 13,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            widget.dish["tags"] ?? "",
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Color(0xFF55606D),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w100,
-                            ),
-                          ),
-                          SizedBox(
-                            width: size.width * 0.1,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.alarm, size: 17),
-                              const SizedBox(
-                                width: 0.5,
-                              ),
-                              Text(
-                                "Est: " + widget.dish["delivery_time"],
-                                style: const TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: size.width * 0.1,
-                          ),
-                          IconButton(onPressed: (){},
-                              icon: const Icon(Icons.favorite,
-                                color: Colors.grey,)),
-                        ],
-                      ),
-                      Text(
-                        widget.dish["store"],
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          color: Colors.teal,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ]
-                ),
               ),
             ),
             pinned: true,
@@ -141,9 +84,9 @@ class _RecommendedState extends State<Recommended> {
             expandedHeight: size.height * 0.43,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
-                getImageNetwork(widget.dish["image"]),
+                AppConstants.BASE_URL+AppConstants.UPLOAD+productDetail.img!,
                 width: double.maxFinite,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -162,6 +105,71 @@ class _RecommendedState extends State<Recommended> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            height: size.height*0.002, width: size.width * 0.3,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          productDetail.name!,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              color: Color(0xFF2B3849),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 13,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              productDetail.location!,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Color(0xFF55606D),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w100,
+                              ),
+                            ),
+                            SizedBox(
+                              width: size.width * 0.1,
+                            ),
+                            Row(
+                              children: const [
+                                Icon(Icons.alarm, size: 17),
+                                SizedBox(
+                                  width: 0.5,
+                                ),
+                                Text(
+                                  "30-45mins",
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: size.width * 0.1,
+                            ),
+                            IconButton(onPressed: (){},
+                                icon: const Icon(Icons.favorite,
+                                  color: Colors.grey,)),
+                          ],
+                        ),
+                      ]
+                  ),
+                  const SizedBox(height: 7),
                   const Text('INTRODUCE',
                     style: TextStyle(
                         color: Color(0xFF455A64),
@@ -172,7 +180,7 @@ class _RecommendedState extends State<Recommended> {
                     height: 10,
                   ),
                   Text(
-                    widget.dish["intro"] ?? "",
+                    productDetail.description!,
                     textAlign: TextAlign.justify,
                     maxLines: 60,
                     overflow: TextOverflow.ellipsis,
@@ -229,7 +237,7 @@ class _RecommendedState extends State<Recommended> {
                   color: Colors.green.shade300,
                   borderRadius: BorderRadius.circular(13)
               ),
-              child: const Text('\N500 | Add to cart'),
+              child: Text('N${productDetail.price}|Add to cart'),
             )
           ],
         ),

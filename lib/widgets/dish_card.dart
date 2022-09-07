@@ -18,18 +18,18 @@ class DishCard extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 1.16,
       child: GetBuilder<RecommendedController>(builder:(recommendedC){
         return recommendedC.isLoaded?
-        GestureDetector(
-          onTap: (){
-            Get.toNamed(RouteHelper.getRecommended());
-          },
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: recommendedC.recommendedList.length,
-              itemBuilder: (context, index){
-                return Container(
+        ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: recommendedC.recommendedList.length,
+            itemBuilder: (context, index){
+              return GestureDetector(
+                onTap: (){
+                  Get.toNamed(RouteHelper.getRecommended(index));
+                },
+                child: Container(
                   width: MediaQuery.of(context).size.width * 0.80,
-                  height: MediaQuery.of(context).size.height * 0.2,
+                  height: MediaQuery.of(context).size.height * 0.19,
                   margin: const EdgeInsets.only(left: 10, right: 10, top: 10,bottom: 10),
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFFFFA),
@@ -47,7 +47,7 @@ class DishCard extends StatelessWidget {
                             image: DecorationImage(
                               fit: BoxFit.fitHeight,
                               image: NetworkImage(
-                                AppConstants.BASE_URL+"/uploads/"+recommendedC.recommendedList[index].img!,
+                                AppConstants.BASE_URL+AppConstants.UPLOAD+recommendedC.recommendedList[index].img!,
                               ),
                             )
                         ),
@@ -101,9 +101,9 @@ class DishCard extends StatelessWidget {
                       )
                     ],
                   ),
-                );
-              }),
-        )
+                ),
+              );
+            })
         : Center(
           child: CircularProgressIndicator(
             color: Colors.amber.shade100,

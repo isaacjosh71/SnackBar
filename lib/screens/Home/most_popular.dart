@@ -2,21 +2,27 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:snack_bar/screens/root_app.dart';
+import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
+import 'package:snack_bar/helpers/app_const.dart';
 import '../../helpers/picker.dart';
+import '../../helpers/router.dart';
 
 class MostPopular extends StatefulWidget {
-  const MostPopular({Key? key}) : super(key: key);
+  MostPopular({Key? key, required this.pageId}) : super(key: key);
+  int pageId;
 
   @override
   State<MostPopular> createState() => _MostPopularState();
 }
 
 class _MostPopularState extends State<MostPopular> {
+
+
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var productDetail = Get.find<MostPopularController>().mostPopularList[widget.pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -30,11 +36,11 @@ class _MostPopularState extends State<MostPopular> {
               child: IconButton(
                 icon: const Icon(
                   Icons.arrow_back_ios_new,
-                  color: Colors.white70,
+                  color: Colors.white,
                   size: 24,
                 ),
                 onPressed: () {
-                  Get.to(()=> const RootApp());
+                  Get.toNamed(RouteHelper.getInitial());
                 },),
             ),
             actions: [
@@ -54,7 +60,7 @@ class _MostPopularState extends State<MostPopular> {
                           style: TextStyle(color: Color(0xFFFFFFFF),
                           ),)),
                     onPressed: () {
-                      Navigator.pushNamed(context, "/checkout");
+
                     },),
                 ),
               ),
@@ -75,81 +81,6 @@ class _MostPopularState extends State<MostPopular> {
                 topRight: Radius.circular(30)
                 ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Container(
-                        height: size.height*0.002, width: size.width * 0.3,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  const Text(
-                    "name",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                        color: Color(0xFF2B3849),
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 13,
-                  ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Text(
-                          "tags",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Color(0xFF55606D),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w100,
-                          ),
-                        ),
-                        SizedBox(
-                          width: size.width * 0.1,
-                        ),
-                        Row(
-                          children: const [
-                            Icon(Icons.alarm, size: 17),
-                            SizedBox(
-                              width: 0.5,
-                            ),
-                            Text(
-                              "delivery_time",
-                              style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: size.width * 0.1,
-                        ),
-                        IconButton(onPressed: (){},
-                            icon: const Icon(Icons.favorite,
-                              color: Colors.grey,)),
-                      ],
-                    ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Close",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Color(0xFF2ecc71),
-                      fontSize: 15,
-                    ),
-            ),
-  ]
-            ),
               ),
     ),
             pinned: true,
@@ -158,46 +89,114 @@ class _MostPopularState extends State<MostPopular> {
             expandedHeight: size.height * 0.43,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
-                getImageNetwork("image"),
+                AppConstants.BASE_URL+AppConstants.UPLOAD+productDetail.img!,
                 width: double.maxFinite,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: Container(
               margin: EdgeInsets.only(
-                left: size.width*0.01,
-                right: size.width*0.01,
+                left: size.width*0.001,
+                right: size.width*0.001,
               ),
               padding: EdgeInsets.only(
                   left: size.width*0.05,
                   right: size.width*0.05,
-                  top: size.height*0.015,
+                  top: size.height*0.005,
                   bottom: size.height*0.005
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text('INTRODUCE',
+                children: [
+                  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Container(
+                            height: size.height*0.002, width: size.width * 0.3,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          productDetail.name!,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: const TextStyle(
+                              color: Color(0xFF2B3849),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.0001,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              productDetail.location!,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Color(0xFF55606D),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w100,
+                              ),
+                            ),
+                            SizedBox(
+                              width: size.width * 0.1,
+                            ),
+                            Row(
+                              children: const [
+                                Icon(Icons.alarm, size: 17),
+                                SizedBox(
+                                  width: 1,
+                                ),
+                                Text(
+                                  "40-55mins",
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: size.width * 0.1,
+                            ),
+                            IconButton(onPressed: (){},
+                                icon: const Icon(Icons.favorite,
+                                  color: Colors.grey,)),
+                          ],
+                        ),
+                        SizedBox(
+                          height: size.height * 0.0001,
+                        ),
+                      ]
+                  ),
+                  const SizedBox(height: 7),
+                  const Text('INTRODUCE',
                   style: TextStyle(
                     color: Color(0xFF455A64),
                     fontSize: 15,
                     letterSpacing: 1.5
                   ),),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
-                    "intro",
+                    productDetail.description!,
                     textAlign: TextAlign.justify,
                     maxLines: 60,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Color(0xFF455A64),
                         fontSize: 14.5,
                         fontWeight: FontWeight.w100,
-                        wordSpacing: 6
+                        wordSpacing: 7
                     ),
                   ),
                 ],
@@ -246,7 +245,7 @@ class _MostPopularState extends State<MostPopular> {
                   color: Colors.green.shade300,
                   borderRadius: BorderRadius.circular(13)
             ),
-              child: const Text('N500 | Add to cart'),
+              child: Text('N${productDetail.price}|Add to cart'),
             )
           ],
         ),

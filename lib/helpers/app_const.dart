@@ -6,4 +6,5 @@ class AppConstants {
   static const String MOST_POPULAR_URI = "/api/v1/products/popular";
   static const String RECOMMENDED_URI = "/api/v1/products/recommended";
   static const String TOKEN = "SBtoken";
+  static const String UPLOAD = "/uploads/";
 }
