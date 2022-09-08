@@ -254,22 +254,22 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Most Popular',
+                  children: const [
+                    Text('Most Popular',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
                         color: Color(0xFF455A64),
                       ),
                     ),
-                    const SizedBox(
+                    SizedBox(
                       height: 10,
                     ),
                     StoreCard(),
-                    const SizedBox(
+                    SizedBox(
                       height: 15,
                     ),
-                    const Text('Recommended',
+                    Text('Recommended',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,

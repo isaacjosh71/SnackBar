@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/helpers/router.dart';
 import '../../data/controllers/recommended_ctlr.dart';
+import '../../widgets/expandable_text.dart';
 
 class Recommended extends StatefulWidget {
   int pageId;
@@ -44,18 +45,13 @@ class _RecommendedState extends State<Recommended> {
                 child: CircleAvatar(
                   backgroundColor: Colors.white60,
                   child: IconButton(
-                    icon: Badge(
-                        child: const Icon(
-                          Icons.add_shopping_cart_rounded,
-                          color: Color(0xFF2B3849),
-                          size: 24,
-                        ),
-                        badgeContent: const Text(
-                          '2',
-                          style: TextStyle(color: Color(0xFFFFFFFF),
-                          ),)),
+                    icon: const Icon(
+                      Icons.add_shopping_cart_rounded,
+                      color: Color(0xFF2B3849),
+                      size: 24,
+                    ),
                     onPressed: () {
-                      Navigator.pushNamed(context, "/checkout");
+                      
                     },),
                 ),
               ),
@@ -179,17 +175,9 @@ class _RecommendedState extends State<Recommended> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    productDetail.description!,
-                    textAlign: TextAlign.justify,
-                    maxLines: 60,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: Color(0xFF455A64),
-                        fontSize: 14.5,
-                        fontWeight: FontWeight.w100,
-                        wordSpacing: 6
-                    ),
+                  SingleChildScrollView(
+                    child: ExpandableText(
+                        text: productDetail.description!),
                   ),
                 ],
               ),

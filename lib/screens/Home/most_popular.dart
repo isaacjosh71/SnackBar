@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/helpers/app_const.dart';
-import '../../helpers/picker.dart';
+import '../../data/controllers/cart_contoller.dart';
 import '../../helpers/router.dart';
+import '../../widgets/expandable_text.dart';
 
 class MostPopular extends StatefulWidget {
   MostPopular({Key? key, required this.pageId}) : super(key: key);
@@ -16,6 +17,8 @@ class MostPopular extends StatefulWidget {
 }
 
 class _MostPopularState extends State<MostPopular> {
+  // ProductModel get product => ProductModel();
+
 
 
 
@@ -23,6 +26,7 @@ class _MostPopularState extends State<MostPopular> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var productDetail = Get.find<MostPopularController>().mostPopularList[widget.pageId];
+    Get.find<MostPopularController>().initProduct(Get.find<CartController>());
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -49,16 +53,11 @@ class _MostPopularState extends State<MostPopular> {
                 child: CircleAvatar(
                   backgroundColor: Colors.white60,
                   child: IconButton(
-                    icon: Badge(
-                        child: const Icon(
-                          Icons.add_shopping_cart_rounded,
-                          color: Color(0xFF2B3849),
-                          size: 24,
-                        ),
-                        badgeContent: const Text(
-                          '2',
-                          style: TextStyle(color: Color(0xFFFFFFFF),
-                          ),)),
+                    icon: const Icon(
+                      Icons.add_shopping_cart_rounded,
+                      color: Color(0xFF2B3849),
+                      size: 24,
+                    ),
                     onPressed: () {
 
                     },),
@@ -187,17 +186,9 @@ class _MostPopularState extends State<MostPopular> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    productDetail.description!,
-                    textAlign: TextAlign.justify,
-                    maxLines: 60,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        color: Color(0xFF455A64),
-                        fontSize: 14.5,
-                        fontWeight: FontWeight.w100,
-                        wordSpacing: 7
-                    ),
+                  SingleChildScrollView(
+                    child: ExpandableText(
+                        text: productDetail.description!),
                   ),
                 ],
               ),
@@ -205,50 +196,62 @@ class _MostPopularState extends State<MostPopular> {
           )
         ],
       ),
-      bottomNavigationBar: Container(
-        height: size.height * 0.1,
-        padding: EdgeInsets.only( left: size.width * 0.085,
-            right: size.width * 0.10),
-        decoration: BoxDecoration(
-          color: const Color(0xFFE6E9ED).withOpacity(0.5),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10)
+      bottomNavigationBar: GetBuilder<MostPopularController>(builder: (mostPopularC){
+        return Container(
+          height: size.height * 0.1,
+          padding: EdgeInsets.only( left: size.width * 0.085,
+              right: size.width * 0.10),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE6E9ED).withOpacity(0.5),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                child: Row(
+                  children: [
+                    IconButton(onPressed: (){
+                      mostPopularC.setQuantity(false);
+                    },
+                        icon: const Icon(Icons.remove,size: 17,
+                          color: Colors.black87,)),
+                    const SizedBox(width: 3,),
+                    Text(mostPopularC.quantity.toString()),
+                    const SizedBox(width: 3,),
+                    IconButton(onPressed: (){
+                      mostPopularC.setQuantity(true);
+                    },
+                        icon: const Icon(Icons.add,size: 17,
+                          color: Colors.black87,)),
+                  ],
+                ),
               ),
-              child: Row(
-                children: [
-                  IconButton(onPressed: (){},
-                      icon: const Icon(Icons.remove,size: 17,
-                      color: Colors.black87,)),
-                  const SizedBox(width: 3,),
-                  const Text('0'),
-                  const SizedBox(width: 3,),
-                  IconButton(onPressed: (){},
-                      icon: const Icon(Icons.add,size: 17,
-                      color: Colors.black87,)),
-                ],
+              const SizedBox(
+                width: 5,
               ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Container(
-              padding: EdgeInsets.only( bottom: size.width * 0.04,
-                  top: size.width * 0.04,
-                  left: size.width*0.05, right: size.width*0.05),
-              decoration: BoxDecoration(
-                  color: Colors.green.shade300,
-                  borderRadius: BorderRadius.circular(13)
-            ),
-              child: Text('N${productDetail.price}|Add to cart'),
-            )
-          ],
-        ),
+              InkWell(
+                onTap: (){
+                  mostPopularC.addItem(productDetail);
+                },
+                child: Container(
+                  padding: EdgeInsets.only( bottom: size.width * 0.04,
+                      top: size.width * 0.04,
+                      left: size.width*0.05, right: size.width*0.05),
+                  decoration: BoxDecoration(
+                      color: Colors.green.shade300,
+                      borderRadius: BorderRadius.circular(13)
+                  ),
+                  child: Text('N${productDetail.price}|Add to cart'),
+                ),
+              )
+            ],
+          ),
+        );
+      },
       ),
     );
   }
