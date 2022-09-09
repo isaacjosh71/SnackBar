@@ -12,8 +12,10 @@ class CartController extends GetxController{
   Map<int, CartModel> get items => _items;
 
   void addItem(ProductModel product, int quantity){
+    var totalQuantity=0;
     if(_items.containsKey(product.id!)){
       _items.update(product.id!, (value){
+        totalQuantity=value.quantity!+quantity;
         return CartModel(
           id: value.id,
           name: value.name,
@@ -24,6 +26,9 @@ class CartController extends GetxController{
           isExist: true,
         );
       });
+      if(totalQuantity<=0){
+        _items.remove(product.id);
+      }
     }else{
       if(quantity>0){
         _items.putIfAbsent(product.id!,()
@@ -60,5 +65,15 @@ class CartController extends GetxController{
       });
     }
     return quantity;
+  }
+
+  int get totalItems{
+    //does return, but not a function that needs parameters'()'
+    var totalQuantity=0;
+    _items.forEach((key, value) {
+      totalQuantity += value.quantity!;
+      // same as (totalQuantity = totalQuantity+value.quantity!)
+    });
+    return totalQuantity;
   }
 }

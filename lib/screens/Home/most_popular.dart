@@ -51,18 +51,40 @@ class _MostPopularState extends State<MostPopular> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 10),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white60,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.add_shopping_cart_rounded,
-                      color: Color(0xFF2B3849),
-                      size: 24,
+                child: GetBuilder<MostPopularController>(builder: (mostPopularC){
+                  return Stack(
+                    children: [
+                    CircleAvatar(
+                    backgroundColor: Colors.white60,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.add_shopping_cart_rounded,
+                        color: Color(0xFF2B3849),
+                        size: 24,
+                      ),
+                      onPressed: () {},),
+                  ),
+                      Get.find<MostPopularController>().totalItems>=1?
+                  const Positioned(
+                    right:0, top:0,
+                    child: Icon(
+                    Icons.circle,
+                    color: Colors.redAccent,
+                    size: 19,
                     ),
-                    onPressed: () {
-
-                    },),
-                ),
+                  )
+                          :Container(),
+                      Get.find<MostPopularController>().totalItems>=1?
+                      Positioned(
+                        right:5, top:1,
+                        child: Text(Get.find<MostPopularController>().totalItems.toString(),
+                        style: const TextStyle(color: Colors.white, fontSize: 12
+                        ),
+                        ),
+                      ) :Container(),
+                    ],
+                  );
+                }),
               ),
             ],
             bottom: PreferredSize(
