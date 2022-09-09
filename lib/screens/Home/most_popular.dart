@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/helpers/app_const.dart';
+import 'package:snack_bar/models/product_model.dart';
 import '../../data/controllers/cart_contoller.dart';
 import '../../helpers/router.dart';
 import '../../widgets/expandable_text.dart';
@@ -26,7 +27,7 @@ class _MostPopularState extends State<MostPopular> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var productDetail = Get.find<MostPopularController>().mostPopularList[widget.pageId];
-    Get.find<MostPopularController>().initProduct(Get.find<CartController>());
+    Get.find<MostPopularController>().initProduct(productDetail, Get.find<CartController>());
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -134,19 +135,16 @@ class _MostPopularState extends State<MostPopular> {
                           height: size.height * 0.0001,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               productDetail.location!,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 color: Color(0xFF55606D),
-                                fontSize: 14,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w100,
                               ),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.1,
                             ),
                             Row(
                               children: const [
@@ -158,13 +156,10 @@ class _MostPopularState extends State<MostPopular> {
                                   "40-55mins",
                                   style: TextStyle(
                                       color: Colors.orange,
-                                      fontSize: 15,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
-                            ),
-                            SizedBox(
-                              width: size.width * 0.1,
                             ),
                             IconButton(onPressed: (){},
                                 icon: const Icon(Icons.favorite,
@@ -220,7 +215,7 @@ class _MostPopularState extends State<MostPopular> {
                         icon: const Icon(Icons.remove,size: 17,
                           color: Colors.black87,)),
                     const SizedBox(width: 3,),
-                    Text(mostPopularC.quantity.toString()),
+                    Text(mostPopularC.inCartItems.toString()),
                     const SizedBox(width: 3,),
                     IconButton(onPressed: (){
                       mostPopularC.setQuantity(true);

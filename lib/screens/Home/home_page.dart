@@ -78,16 +78,11 @@ class _HomePageState extends State<HomePage> {
                               Navigator.pushNamed(context, "/customer_care");
                             },),
                           IconButton(
-                            icon: Badge(
-                                child: const Icon(
-                                  Icons.add_shopping_cart_rounded,
-                                  color: Color(0xFF2B3849),
-                                  size: 25,
-                                ),
-                              badgeContent: const Text(
-                                '2',
-                                style: TextStyle(color: Color(0xFFFFFFFF),
-                              ),)),
+                            icon: const Icon(
+                              Icons.add_shopping_cart_rounded,
+                              color: Color(0xFF2B3849),
+                              size: 25,
+                            ),
                               onPressed: () {
                                 Navigator.pushNamed(context, "/checkout");
                               },),

@@ -126,37 +126,31 @@ class _RecommendedState extends State<Recommended> {
                           height: 13,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               productDetail.location!,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 color: Color(0xFF55606D),
-                                fontSize: 14,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w100,
                               ),
-                            ),
-                            SizedBox(
-                              width: size.width * 0.1,
                             ),
                             Row(
                               children: const [
                                 Icon(Icons.alarm, size: 17),
                                 SizedBox(
-                                  width: 0.5,
+                                  width: 1,
                                 ),
                                 Text(
                                   "30-45mins",
                                   style: TextStyle(
                                       color: Colors.orange,
-                                      fontSize: 15,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
-                            ),
-                            SizedBox(
-                              width: size.width * 0.1,
                             ),
                             IconButton(onPressed: (){},
                                 icon: const Icon(Icons.favorite,

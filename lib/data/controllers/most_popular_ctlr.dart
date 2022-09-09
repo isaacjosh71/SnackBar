@@ -48,13 +48,24 @@ class MostPopularController extends GetxController{
       return 10;}
     else {return quantity;}
   }
-  void initProduct(CartController cartC){
+  void initProduct(ProductModel product, CartController cartC){
     _quantity=0;
     _inCartItems=0;
     _cart=cartC;
+    var exist=false;
+    exist=_cart.existInCart(product);
+    if(exist){
+      _inCartItems=_cart.getQuantity(product);
+    }
   }
 
   void addItem(ProductModel product){
-    _cart.addItem(product, _quantity);
+   if(quantity>0){
+     _cart.addItem(product, _quantity);
+     _quantity=0;
+     _cart.items.forEach((key, value) {});
+   }else{
+     Get.snackbar('Item Count', 'You should add at least an item');
+   }
   }
 }
