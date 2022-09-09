@@ -40,10 +40,10 @@ class MostPopularController extends GetxController{
     update();
   }
   int checkQuantity(int quantity){
-    if(quantity<0){
+    if((_inCartItems+quantity)<0){
       Get.snackbar('Item Count', 'You can\'t reduce more');
       return 0;}
-    else if(quantity>10){
+    else if((_inCartItems+quantity)>10){
       Get.snackbar('Item Count', 'You can\'t add more');
       return 10;}
     else {return quantity;}
@@ -60,12 +60,9 @@ class MostPopularController extends GetxController{
   }
 
   void addItem(ProductModel product){
-   if(quantity>0){
      _cart.addItem(product, _quantity);
      _quantity=0;
+     _inCartItems=_cart.getQuantity(product);
      _cart.items.forEach((key, value) {});
-   }else{
-     Get.snackbar('Item Count', 'You should add at least an item');
-   }
   }
 }

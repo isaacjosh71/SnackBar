@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: RouteHelper.initial,
         getPages: RouteHelper.routes,
-        home: const Splash(),
+        home: const RootApp(),
       );
     },);
   }
