@@ -69,25 +69,12 @@ class _HomePageState extends State<HomePage> {
                               ),),
                           ]
                       ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon( Icons.chat_outlined,
-                            color: Color(0xFF2B3849),),
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/customer_care");
-                            },),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.add_shopping_cart_rounded,
-                              color: Color(0xFF2B3849),
-                              size: 25,
-                            ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/checkout");
-                              },),
-                        ],
-                      )
+                      IconButton(
+                        icon: const Icon( Icons.chat_outlined,
+                        color: Color(0xFF2B3849),),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/customer_care");
+                        },)
                     ],
                   ),
                 ],

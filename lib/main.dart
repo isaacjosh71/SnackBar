@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:snack_bar/screens/Home/home_page.dart';
 import 'package:snack_bar/screens/Home/recommended.dart';
-import 'package:snack_bar/screens/root_app.dart';
-import 'package:snack_bar/screens/splash.dart';
+import 'package:snack_bar/screens/Home/root_app.dart';
+import 'package:snack_bar/validations/splash.dart';
 import 'package:sizer/sizer.dart';
 import 'data/controllers/most_popular_ctlr.dart';
 import 'data/controllers/recommended_ctlr.dart';
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: RouteHelper.initial,
         getPages: RouteHelper.routes,
-        home: const Splash(),
+        home: const RootApp(),
       );
     },);
   }

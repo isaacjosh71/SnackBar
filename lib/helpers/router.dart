@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 import 'package:snack_bar/screens/Home/most_popular.dart';
 import 'package:snack_bar/screens/Home/recommended.dart';
-import 'package:snack_bar/screens/root_app.dart';
+import 'package:snack_bar/screens/Home/root_app.dart';
 
 class RouteHelper{
   static const String initial ="/";

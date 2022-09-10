@@ -1,7 +1,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:snack_bar/screens/onboarding.dart';
+import 'package:snack_bar/validations/onboarding.dart';
 import 'package:sizer/sizer.dart';
 
 class Splash extends StatefulWidget {

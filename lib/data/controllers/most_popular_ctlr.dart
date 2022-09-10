@@ -42,6 +42,10 @@ class MostPopularController extends GetxController{
   int checkQuantity(int quantity){
     if((_inCartItems+quantity)<0){
       Get.snackbar('Item Count', 'You can\'t reduce more');
+      if(_inCartItems>0){
+        _quantity=-_inCartItems;
+        return _quantity;
+      }
       return 0;}
     else if((_inCartItems+quantity)>10){
       Get.snackbar('Item Count', 'You can\'t add more');

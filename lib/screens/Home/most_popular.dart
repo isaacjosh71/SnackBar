@@ -21,8 +21,6 @@ class _MostPopularState extends State<MostPopular> {
   // ProductModel get product => ProductModel();
 
 
-
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

@@ -2,8 +2,10 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/helpers/router.dart';
+import '../../data/controllers/cart_contoller.dart';
 import '../../data/controllers/recommended_ctlr.dart';
 import '../../widgets/expandable_text.dart';
 
@@ -19,6 +21,7 @@ class _RecommendedState extends State<Recommended> {
   @override
   Widget build(BuildContext context) {
     var productDetail = Get.find<RecommendedController>().recommendedList[widget.pageId];
+    Get.find<MostPopularController>().initProduct(productDetail, Get.find<CartController>());
     var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -42,18 +45,40 @@ class _RecommendedState extends State<Recommended> {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 10),
-                child: CircleAvatar(
-                  backgroundColor: Colors.white60,
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.add_shopping_cart_rounded,
-                      color: Color(0xFF2B3849),
-                      size: 24,
-                    ),
-                    onPressed: () {
-                      
-                    },),
-                ),
+                child: GetBuilder<MostPopularController>(builder: (mostPopularC){
+                  return Stack(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.white60,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.add_shopping_cart_rounded,
+                            color: Color(0xFF2B3849),
+                            size: 24,
+                          ),
+                          onPressed: () {},),
+                      ),
+                      Get.find<MostPopularController>().totalItems>=1?
+                      const Positioned(
+                        right:0, top:0,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.redAccent,
+                          size: 19,
+                        ),
+                      )
+                          :Container(),
+                      Get.find<MostPopularController>().totalItems>=1?
+                      Positioned(
+                        right:5, top:1,
+                        child: Text(Get.find<MostPopularController>().totalItems.toString(),
+                          style: const TextStyle(color: Colors.white, fontSize: 12
+                          ),
+                        ),
+                      ) :Container(),
+                    ],
+                  );
+                }),
               ),
             ],
             bottom: PreferredSize(
@@ -179,51 +204,62 @@ class _RecommendedState extends State<Recommended> {
           )
         ],
       ),
-      bottomNavigationBar: Container(
-        height: size.height * 0.1,
-        padding: EdgeInsets.only( left: size.width * 0.085,
-            right: size.width * 0.10),
-        decoration: BoxDecoration(
-          color: const Color(0xFFE6E9ED).withOpacity(0.5),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10)
+      bottomNavigationBar: GetBuilder<MostPopularController>(builder: (controller){
+        return Container(
+          height: size.height * 0.1,
+          padding: EdgeInsets.only( left: size.width * 0.085,
+              right: size.width * 0.10),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE6E9ED).withOpacity(0.5),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                child: Row(
+                  children: [
+                    IconButton(onPressed: (){
+                      controller.setQuantity(false);
+                    },
+                        icon: const Icon(Icons.remove,size: 17,
+                          color: Colors.black87,)),
+                    const SizedBox(width: 3,),
+                    Text(controller.inCartItems.toString()),
+                    const SizedBox(width: 3,),
+                    IconButton(onPressed: (){
+                      controller.setQuantity(true);
+                    },
+                        icon: const Icon(Icons.add,size: 17,
+                          color: Colors.black87,)),
+                  ],
+                ),
               ),
-              child: Row(
-                children: [
-                  IconButton(onPressed: (){},
-                      icon: const Icon(Icons.remove,size: 17,
-                        color: Colors.black87,)),
-                  const SizedBox(width: 3,),
-                  const Text('0'),
-                  const SizedBox(width: 3,),
-                  IconButton(onPressed: (){},
-                      icon: const Icon(Icons.add,size: 17,
-                        color: Colors.black87,)),
-                ],
+              const SizedBox(
+                width: 5,
               ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Container(
-              padding: EdgeInsets.only( bottom: size.width * 0.04,
-                  top: size.width * 0.04,
-                  left: size.width*0.05, right: size.width*0.05),
-              decoration: BoxDecoration(
-                  color: Colors.green.shade300,
-                  borderRadius: BorderRadius.circular(13)
-              ),
-              child: Text('N${productDetail.price}|Add to cart'),
-            )
-          ],
-        ),
-      ),
+              GestureDetector(
+                onTap: (){
+                  controller.addItem(productDetail);
+                },
+                child: Container(
+                  padding: EdgeInsets.only( bottom: size.width * 0.04,
+                      top: size.width * 0.04,
+                      left: size.width*0.05, right: size.width*0.05),
+                  decoration: BoxDecoration(
+                      color: Colors.green.shade300,
+                      borderRadius: BorderRadius.circular(13)
+                  ),
+                  child: Text('N${productDetail.price}|Add to cart'),
+                ),
+              )
+            ],
+          ),
+        );
+      })
     );
   }
 }
