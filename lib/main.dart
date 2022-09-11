@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:snack_bar/screens/Cart/cart_page.dart';
 import 'package:snack_bar/screens/Home/home_page.dart';
 import 'package:snack_bar/screens/Home/recommended.dart';
 import 'package:snack_bar/screens/Home/root_app.dart';

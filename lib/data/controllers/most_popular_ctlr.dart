@@ -5,6 +5,8 @@ import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/repository/most_popular_repo.dart';
 import 'package:snack_bar/models/product_model.dart';
 
+import '../../models/cart_model.dart';
+
 class MostPopularController extends GetxController{
   final MostPopularRepo mostPopularRepo;
   MostPopularController({required this.mostPopularRepo});
@@ -73,5 +75,9 @@ class MostPopularController extends GetxController{
 
   int get totalItems{
     return _cart.totalItems;
+  }
+
+  List<CartModel> get getItems{
+    return _cart.getItems;
   }
 }

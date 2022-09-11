@@ -250,7 +250,7 @@ class _RecommendedState extends State<Recommended> {
                       top: size.width * 0.04,
                       left: size.width*0.05, right: size.width*0.05),
                   decoration: BoxDecoration(
-                      color: Colors.green.shade300,
+                      color: Colors.orangeAccent,
                       borderRadius: BorderRadius.circular(13)
                   ),
                   child: Text('N${productDetail.price}|Add to cart'),

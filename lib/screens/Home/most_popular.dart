@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/models/product_model.dart';
+import 'package:snack_bar/screens/Cart/cart_page.dart';
 import '../../data/controllers/cart_contoller.dart';
 import '../../helpers/router.dart';
 import '../../widgets/expandable_text.dart';
@@ -60,7 +61,11 @@ class _MostPopularState extends State<MostPopular> {
                         color: Color(0xFF2B3849),
                         size: 24,
                       ),
-                      onPressed: () {},),
+                      onPressed: () {
+                        Get.to(
+                            ()=>CartPage(),
+                        );
+                      },),
                   ),
                       Get.find<MostPopularController>().totalItems>=1?
                   const Positioned(
@@ -257,7 +262,7 @@ class _MostPopularState extends State<MostPopular> {
                       top: size.width * 0.04,
                       left: size.width*0.05, right: size.width*0.05),
                   decoration: BoxDecoration(
-                      color: Colors.green.shade300,
+                      color: Colors.orangeAccent,
                       borderRadius: BorderRadius.circular(13)
                   ),
                   child: Text('N${productDetail.price}|Add to cart'),
