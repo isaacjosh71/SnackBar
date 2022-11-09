@@ -1,4 +1,6 @@
 
+import 'package:snack_bar/models/product_model.dart';
+
 class CartModel {
   int? id;
   String? name;
@@ -7,6 +9,7 @@ class CartModel {
   int? quantity;
   bool? isExist;
   String? timeCreated;
+  ProductModel? productModel;
 
   CartModel(
       {this.id,
@@ -15,7 +18,8 @@ class CartModel {
         this.img,
         this.quantity,
         this.isExist,
-        this.timeCreated
+        this.timeCreated,
+        this.productModel
       });
 
   CartModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +30,7 @@ class CartModel {
     quantity = json['quantity'];
     isExist = json['isExist'];
     timeCreated = json['timeCreated'];
+    productModel=ProductModel.fromJson(json['productModel']);
   }
 
 // Map<String, dynamic> toJson() {

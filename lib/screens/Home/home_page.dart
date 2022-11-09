@@ -1,16 +1,16 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
-import 'package:snack_bar/helpers/router.dart';
-import 'package:snack_bar/screens/Home/most_popular.dart';
-import 'package:snack_bar/screens/Home/recommended.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:snack_bar/screens/Home/snack_categories.dart';
 import 'package:snack_bar/widgets/store_card.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:snack_bar/helpers/categories.dart';
-import 'package:badges/badges.dart';
+import '../../data/controllers/most_popular_ctlr.dart';
+import '../../helpers/router.dart';
 import '../../widgets/dish_card.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
         excludeHeaderSemantics: true,
         flexibleSpace: SafeArea(
             child: Container(
-              padding: const EdgeInsets.only(right: 20,left: 20),
+              padding: const EdgeInsets.only(right: 10,left: 15),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,12 +69,57 @@ class _HomePageState extends State<HomePage> {
                               ),),
                           ]
                       ),
-                      IconButton(
-                        icon: const Icon( Icons.chat_outlined,
-                        color: Color(0xFF2B3849),),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/customer_care");
-                        },)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: const Icon( Icons.chat_outlined,
+                            color: Color(0xFF2B3849),),
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/customer_care");
+                            },),
+                          SizedBox(width: MediaQuery.of(context).size.width*0.001,),
+                          GetBuilder<MostPopularController>(builder: (mostPopularC){
+                            return Stack(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.white60,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.add_shopping_cart_rounded,
+                                      color: Color(0xFF2B3849),
+                                      size: 24,
+                                    ),
+                                    onPressed: () {
+                                      if(mostPopularC.totalItems>=1){
+                                        Get.toNamed(
+                                            RouteHelper.getCartPage());}
+                                    },),
+                                ),
+                                mostPopularC.totalItems>=1?
+                                const Positioned(
+                                  right:0, top:0,
+                                  child: Icon(
+                                    Icons.circle,
+                                    color: Colors.redAccent,
+                                    size: 19,
+                                  ),
+                                )
+                                    :Container(),
+                                Get.find<MostPopularController>().totalItems>=1?
+                                Positioned(
+                                  right:5, top:1,
+                                  child: Text(Get.find<MostPopularController>().totalItems.toString(),
+                                    style: const TextStyle(color: Colors.white, fontSize: 12
+                                    ),
+                                  ),
+                                ) :Container(),
+                              ],
+                            );
+                          }),
+                        ],
+                      )
                     ],
                   ),
                 ],

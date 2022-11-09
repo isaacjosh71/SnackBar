@@ -41,6 +41,9 @@ dependencies:
   firebase_auth: ^3.3.19
   get: ^4.6.5
   cloud_firestore: ^3.1.17
+  shared_preferences: ^2.0.15
+  persistent_bottom_nav_bar: ^5.0.2
+
 
 dev_dependencies:
   flutter_test:

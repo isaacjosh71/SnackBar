@@ -25,7 +25,7 @@ class DishCard extends StatelessWidget {
             itemBuilder: (context, index){
               return GestureDetector(
                 onTap: (){
-                  Get.toNamed(RouteHelper.getRecommended(index));
+                  Get.toNamed(RouteHelper.getRecommended(index, 'home'));
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.80,

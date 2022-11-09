@@ -87,7 +87,7 @@ class _StoreCardState extends State<StoreCard> {
       transform: matrix4,
       child: GestureDetector(
         onTap: (){
-          Get.toNamed(RouteHelper.getMostPopular(index));
+          Get.toNamed(RouteHelper.getMostPopular(index, 'home'));
         },
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,

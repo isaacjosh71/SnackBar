@@ -27,18 +27,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return Sizer(builder: (BuildContext context, Orientation orientation, DeviceType deviceType) {
-      Get.find<MostPopularController>().getMostPopularList();
-      Get.find<RecommendedController>().getRecommendedList();
-      return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Acme',
-        ),
-        initialRoute: RouteHelper.initial,
-        getPages: RouteHelper.routes,
-        home: const RootApp(),
-      );
-    },);
+    return GetBuilder<MostPopularController>(builder: (_){
+      return GetBuilder<RecommendedController>(builder: (_){
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            fontFamily: 'Acme',
+          ),
+          initialRoute: RouteHelper.getSplashScreen(),
+          getPages: RouteHelper.routes,
+          // home: const RootApp(),
+        );
+      });
+    });
   }
 }

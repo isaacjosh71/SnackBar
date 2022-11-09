@@ -5,13 +5,15 @@ import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/helpers/router.dart';
+import 'package:snack_bar/screens/Home/root_app.dart';
 import '../../data/controllers/cart_contoller.dart';
 import '../../data/controllers/recommended_ctlr.dart';
 import '../../widgets/expandable_text.dart';
 
 class Recommended extends StatefulWidget {
-  int pageId;
-  Recommended({Key? key, required this.pageId}) : super(key: key);
+  final int pageId;
+  final String page;
+  const Recommended({Key? key, required this.pageId, required this.page}) : super(key: key);
 
   @override
   State<Recommended> createState() => _RecommendedState();
@@ -39,7 +41,11 @@ class _RecommendedState extends State<Recommended> {
                   size: 24,
                 ),
                 onPressed: () {
-                  Get.toNamed(RouteHelper.getInitial());
+                  if(widget.page=='cartPage'){
+                    Get.toNamed(RouteHelper.getCartPage());
+                  }else{
+                    Get.toNamed(RouteHelper.getInitial());
+                  }
                 },),
             ),
             actions: [
@@ -56,7 +62,11 @@ class _RecommendedState extends State<Recommended> {
                             color: Color(0xFF2B3849),
                             size: 24,
                           ),
-                          onPressed: () {},),
+                          onPressed: () {
+                            if(mostPopularC.totalItems>=1){
+                              Get.toNamed(
+                                  RouteHelper.getCartPage());}
+                          },),
                       ),
                       Get.find<MostPopularController>().totalItems>=1?
                       const Positioned(

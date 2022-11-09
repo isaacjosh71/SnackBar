@@ -6,22 +6,21 @@ import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/models/product_model.dart';
 import 'package:snack_bar/screens/Cart/cart_page.dart';
+import 'package:snack_bar/screens/Home/root_app.dart';
 import '../../data/controllers/cart_contoller.dart';
 import '../../helpers/router.dart';
 import '../../widgets/expandable_text.dart';
 
 class MostPopular extends StatefulWidget {
-  MostPopular({Key? key, required this.pageId}) : super(key: key);
-  int pageId;
+  const MostPopular({Key? key, required this.pageId, required this.page}) : super(key: key);
+  final int pageId;
+  final String page;
 
   @override
   State<MostPopular> createState() => _MostPopularState();
 }
 
 class _MostPopularState extends State<MostPopular> {
-  // ProductModel get product => ProductModel();
-
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -44,7 +43,11 @@ class _MostPopularState extends State<MostPopular> {
                   size: 24,
                 ),
                 onPressed: () {
-                  Get.toNamed(RouteHelper.getInitial());
+                  if(widget.page=='cartPage'){
+                    Get.toNamed(RouteHelper.getCartPage());
+                  }else{
+                    Get.toNamed(RouteHelper.getInitial());
+                  }
                 },),
             ),
             actions: [
@@ -62,13 +65,13 @@ class _MostPopularState extends State<MostPopular> {
                         size: 24,
                       ),
                       onPressed: () {
-                        Get.to(
-                            ()=>CartPage(),
-                        );
+                        if(mostPopularC.totalItems>=1){
+                          Get.toNamed(
+                            RouteHelper.getCartPage());}
                       },),
                   ),
-                      Get.find<MostPopularController>().totalItems>=1?
-                  const Positioned(
+                      mostPopularC.totalItems>=1?
+                   const Positioned(
                     right:0, top:0,
                     child: Icon(
                     Icons.circle,

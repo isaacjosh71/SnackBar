@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:snack_bar/screens/Home/home_page.dart';
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
