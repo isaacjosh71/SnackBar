@@ -79,45 +79,6 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {
                               Navigator.pushNamed(context, "/customer_care");
                             },),
-                          SizedBox(width: MediaQuery.of(context).size.width*0.001,),
-                          GetBuilder<MostPopularController>(builder: (mostPopularC){
-                            return Stack(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: Colors.white60,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.add_shopping_cart_rounded,
-                                      color: Color(0xFF2B3849),
-                                      size: 24,
-                                    ),
-                                    onPressed: () {
-                                      if(mostPopularC.totalItems>=1){
-                                        Get.toNamed(
-                                            RouteHelper.getCartPage());}
-                                    },),
-                                ),
-                                mostPopularC.totalItems>=1?
-                                const Positioned(
-                                  right:0, top:0,
-                                  child: Icon(
-                                    Icons.circle,
-                                    color: Colors.redAccent,
-                                    size: 19,
-                                  ),
-                                )
-                                    :Container(),
-                                Get.find<MostPopularController>().totalItems>=1?
-                                Positioned(
-                                  right:5, top:1,
-                                  child: Text(Get.find<MostPopularController>().totalItems.toString(),
-                                    style: const TextStyle(color: Colors.white, fontSize: 12
-                                    ),
-                                  ),
-                                ) :Container(),
-                              ],
-                            );
-                          }),
                         ],
                       )
                     ],

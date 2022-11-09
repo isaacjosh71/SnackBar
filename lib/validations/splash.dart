@@ -60,7 +60,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
                 scale: animation,
                 child: Center(
                   child: Image.asset('assets/images/25.png',
-                  height: MediaQuery.of(context).size.height*0.12,
+                  height: MediaQuery.of(context).size.height*0.15,
                     color: Colors.white,
                   ),
                 ),
