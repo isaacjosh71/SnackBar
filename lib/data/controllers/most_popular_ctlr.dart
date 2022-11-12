@@ -17,6 +17,7 @@ class MostPopularController extends GetxController{
   bool get isLoaded => _isLoaded;
   late CartController _cart;
 
+  //get most popular products data
   Future<void>getMostPopularList() async{
       Response response = await mostPopularRepo.getMostPopularList();
       if (response.statusCode == 200){
@@ -33,6 +34,7 @@ class MostPopularController extends GetxController{
   int _inCartItems= 0;
   int get inCartItems=>_inCartItems+_quantity;
 
+  //product increments
   void setQuantity(bool isIncrement){
     if(isIncrement){
       _quantity=checkQuantity(_quantity+1);
@@ -41,6 +43,8 @@ class MostPopularController extends GetxController{
     }
     update();
   }
+
+  //check increment range
   int checkQuantity(int quantity){
     if((_inCartItems+quantity)<0){
       Get.snackbar('Item Count', 'You can\'t reduce more');
@@ -54,6 +58,8 @@ class MostPopularController extends GetxController{
       return 10;}
     else {return quantity;}
   }
+
+  //init product when app refreshes
   void initProduct(ProductModel product, CartController cartC){
     _quantity=0;
     _inCartItems=0;
@@ -65,6 +71,7 @@ class MostPopularController extends GetxController{
     }
   }
 
+  //add products from cart controller
   void addItem(ProductModel product){
      _cart.addItem(product, _quantity);
      _quantity=0;
@@ -73,10 +80,12 @@ class MostPopularController extends GetxController{
      update();
   }
 
+  //total products from cart controller
   int get totalItems{
     return _cart.totalItems;
   }
 
+  //get
   List<CartModel> get getItems{
     return _cart.getItems;
   }

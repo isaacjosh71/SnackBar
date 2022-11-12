@@ -228,7 +228,7 @@ class CartPage extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-
+                  cartC.addCartHistory();
                 },
                 child: Container(
                   padding: EdgeInsets.only( bottom: size.width * 0.04,

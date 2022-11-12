@@ -7,13 +7,20 @@ import '../repository/cart_repo.dart';
 class CartController extends GetxController{
   final CartRepo cartRepo;
   CartController({required this.cartRepo});
+
+  //product
   Map<int, CartModel> _items={};
 
   Map<int, CartModel> get items => _items;
 
+  List<CartModel> storageItems = [];
+
+  //products adding to cart
   void addItem(ProductModel product, int quantity){
+    //add item to cart
     var totalQuantity=0;
     if(_items.containsKey(product.id!)){
+      //if exist, add quantity to it
       _items.update(product.id!, (value){
         //if exist
         totalQuantity=value.quantity!+quantity;
@@ -50,9 +57,11 @@ class CartController extends GetxController{
           Get.snackbar('Item Count', 'You should add at least an item');
         }
     }
+    cartRepo.addToCartList(getItems);
     update();
   }
 
+  //conditional check if product already exist in cart
   bool existInCart(ProductModel product){
     if(_items.containsKey(product.id)){
       return true;
@@ -60,6 +69,7 @@ class CartController extends GetxController{
     return false;
   }
 
+  //
   int getQuantity(ProductModel product){
     var quantity=0;
     if(_items.containsKey(product.id)){
@@ -72,6 +82,7 @@ class CartController extends GetxController{
     return quantity;
   }
 
+  //total item displayed on cart icon badge
   int get totalItems{
     //does return, but not a function that needs parameters'()'
     var totalQuantity=0;
@@ -82,17 +93,46 @@ class CartController extends GetxController{
     return totalQuantity;
   }
 
+  //list entry for new product added to cart
   List<CartModel> get getItems{
     return _items.entries.map((e){
       return e.value;
     }).toList();
   }
 
+  //total amount to checkout in cart page
   int get totalAmount{
    var total=0;
    _items.forEach((key, value) {
      total += value.quantity!*value.price!;
    });
     return total;
+  }
+
+  //get cart saved data
+  List<CartModel> getCartData(){
+    setCart=cartRepo.getCartList();
+    return storageItems;
+  }
+  //to show previous cart history when app refreshes
+  set setCart(List<CartModel> items){
+    storageItems=items;
+    for(int i=0; i<storageItems.length; i++){
+      _items.putIfAbsent(storageItems[i].productModel!.id!,
+              () => storageItems[i]);
+    }
+  }
+
+  //saved cart history for cart root page
+  void addCartHistory(){
+    cartRepo.addCartHistory();
+    clear();
+  }
+
+  //clear after checkout
+  void clear(){
+    //empty map
+    _items={};
+    update();
   }
 }
