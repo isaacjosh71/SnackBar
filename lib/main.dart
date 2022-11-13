@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    Get.find<CartController>().getCartData();
+    // Get.find<CartController>().getCartData();
     return GetBuilder<MostPopularController>(builder: (_){
       return GetBuilder<RecommendedController>(builder: (_){
         return GetMaterialApp(

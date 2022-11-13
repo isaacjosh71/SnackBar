@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 
@@ -16,6 +17,8 @@ class CartRepo{
 
   //add to cart list memory
   void addToCartList(List<CartModel> cartList){
+    // sharedPreferences.remove(AppConstants.CARTLIST);
+    // sharedPreferences.remove(AppConstants.CARTHISTORYLIST);
     cart=[];
     //converting objects to string/json because sharedPreferences only accepts string
     cartList.forEach((element) => cart.add(jsonEncode(element)));
@@ -31,15 +34,38 @@ class CartRepo{
     }
     List<CartModel> cartList=[];
     //convert back json/string to object
-    carts.forEach((element)=> cartList.add(CartModel.fromJson(jsonDecode(element))));
+    for (var element in carts) {
+      cartList.add(CartModel.fromJson(jsonDecode(element)));
+    }
     return cartList;
 }
+  //get cart history list memory
+  List<CartModel> getCarHistoryList(){
+    if(sharedPreferences.containsKey(AppConstants.CARTHISTORYLIST)){
+      cartHistory=[];
+      cartHistory=sharedPreferences.getStringList(AppConstants.CARTHISTORYLIST)!;
+    }
+    List<CartModel> cartListHistory = [];
+    for (var element in cartHistory) {
+      cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
+    }
+    return cartListHistory;
+  }
 
-  //saving cart to history
-void addCartHistory(){
+  //saving cart to history memory
+  void addCartHistory(){
+    if(sharedPreferences.containsKey(AppConstants.CARTHISTORYLIST)){
+      cartHistory = sharedPreferences.getStringList(AppConstants.CARTHISTORYLIST)!;
+    }
     for (int i=0; i<cart.length; i++){cartHistory.add(cart[i]);
-} removeCart();
-sharedPreferences.setStringList(AppConstants.CARTHISTORYLIST, cartHistory);
-} void removeCart(){sharedPreferences.remove(AppConstants.CARTLIST); //remove all cart items once checkout
+    }
+    removeCart();
+    sharedPreferences.setStringList(AppConstants.CARTHISTORYLIST, cartHistory);
+  }
+
+  //remove all cart items once checkout
+  void removeCart(){
+    sharedPreferences.remove(AppConstants.CARTLIST
+    );
 }
 }
