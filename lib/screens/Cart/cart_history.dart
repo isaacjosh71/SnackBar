@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
+import 'package:snack_bar/helpers/app_const.dart';
 
 class CartHistory extends StatelessWidget {
   const CartHistory({Key? key}) : super(key: key);
@@ -70,7 +71,16 @@ class CartHistory extends StatelessWidget {
                         direction: Axis.horizontal,
                           children: List.generate(itemsPerOrder[i], (index)
                           {
-                           return Container();
+                           return Container(
+                             height: 80, width: 80,
+                             decoration: BoxDecoration(
+                               image: DecorationImage(
+                                 image: NetworkImage(
+                                   AppConstants.BASE_URL+AppConstants.UPLOAD+getCartHistoryList[i].img!,
+                                 )
+                               )
+                             ),
+                           );
                           }),
                       )
                     ],
