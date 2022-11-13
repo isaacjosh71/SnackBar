@@ -28,14 +28,14 @@ class CartHistory extends StatelessWidget {
       return cartItemsPerOrder.entries.map((e) => e.value).toList();
     }
 
-    List<int> orderTimes = cartOrderTimeToList();
+    List<int> itemsPerOrder = cartOrderTimeToList();
 
-    var saveCounter = 0;
-    for(int x=0; x<cartItemsPerOrder.length; x++){
-      for(int y=0; y<orderTimes.length; y++){
-
-      }
-    }
+    // var saveCounter = 0;
+    // for(int x=0; x<cartItemsPerOrder.length; x++){
+    //   for(int y=0; y<orderTimes.length; y++){
+    //
+    //   }
+    // }
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -58,7 +58,7 @@ class CartHistory extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            for (int i=0; i<cartItemsPerOrder.length; i++)
+            for (int i=0; i<itemsPerOrder.length; i++)
               Container(
                 margin: EdgeInsets.only(
                     bottom: MediaQuery.of(context).size.height*0.035),
@@ -68,7 +68,7 @@ class CartHistory extends StatelessWidget {
                       Text('Date'),
                       Wrap(
                         direction: Axis.horizontal,
-                          children: List.generate(3, (index)
+                          children: List.generate(itemsPerOrder[i], (index)
                           {
                            return Container();
                           }),
