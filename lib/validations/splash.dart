@@ -7,6 +7,7 @@ import 'package:snack_bar/helpers/router.dart';
 import 'package:snack_bar/validations/onboarding.dart';
 import 'package:sizer/sizer.dart';
 
+import '../data/controllers/cart_contoller.dart';
 import '../data/controllers/most_popular_ctlr.dart';
 import '../data/controllers/recommended_ctlr.dart';
 

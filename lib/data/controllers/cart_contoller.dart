@@ -31,7 +31,7 @@ class CartController extends GetxController{
           img: value.img,
           quantity: value.quantity!+quantity,
           timeCreated: DateTime.now().toString(),
-          productModel: product,
+          product: product,
           isExist: true,
         );
       });
@@ -50,7 +50,7 @@ class CartController extends GetxController{
           quantity: quantity,
           timeCreated: DateTime.now().toString(),
           isExist: true,
-          productModel: product,
+          product: product,
         );
         });
       }else{
@@ -118,7 +118,7 @@ class CartController extends GetxController{
   set setCart(List<CartModel> items){
     storageItems=items;
     for(int i=0; i<storageItems.length; i++){
-      _items.putIfAbsent(storageItems[i].productModel!.id!,
+      _items.putIfAbsent(storageItems[i].product!.id!,
               () => storageItems[i]);
     }
   }

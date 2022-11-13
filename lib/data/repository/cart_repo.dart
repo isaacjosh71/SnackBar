@@ -1,10 +1,7 @@
 
 import 'dart:convert';
-
-import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snack_bar/helpers/app_const.dart';
-
 import '../../models/cart_model.dart';
 
 class CartRepo{
@@ -21,7 +18,9 @@ class CartRepo{
     // sharedPreferences.remove(AppConstants.CARTHISTORYLIST);
     cart=[];
     //converting objects to string/json because sharedPreferences only accepts string
-    cartList.forEach((element) => cart.add(jsonEncode(element)));
+    for (var element in cartList) {
+      cart.add(jsonEncode(element));
+    }
     sharedPreferences.setStringList(AppConstants.CARTLIST, cart);
     getCartList();
   }
@@ -39,6 +38,7 @@ class CartRepo{
     }
     return cartList;
 }
+
   //get cart history list memory
   List<CartModel> getCarHistoryList(){
     if(sharedPreferences.containsKey(AppConstants.CARTHISTORYLIST)){
@@ -46,9 +46,7 @@ class CartRepo{
       cartHistory=sharedPreferences.getStringList(AppConstants.CARTHISTORYLIST)!;
     }
     List<CartModel> cartListHistory = [];
-    for (var element in cartHistory) {
-      cartListHistory.add(CartModel.fromJson(jsonDecode(element)));
-    }
+    cartHistory.forEach((element) =>cartListHistory.add(CartModel.fromJson(jsonDecode(element))));
     return cartListHistory;
   }
 

@@ -95,13 +95,13 @@ class CartPage extends StatelessWidget {
                                   onTap: (){
                                     var mostPopularIndex = Get.find<MostPopularController>()
                                         .mostPopularList
-                                        .indexOf(_cartList[index].productModel!);
+                                        .indexOf(_cartList[index].product!);
                                     if(mostPopularIndex>=0){
                                       Get.toNamed(RouteHelper.getMostPopular(mostPopularIndex,'cartPage'));
                                     }else{
                                       var recommendedIndex = Get.find<RecommendedController>()
                                           .recommendedList
-                                          .indexOf(_cartList[index].productModel!);
+                                          .indexOf(_cartList[index].product!);
                                         Get.toNamed(RouteHelper.getRecommended(recommendedIndex, 'cartPage'));
                                     }
                                   },
@@ -172,7 +172,7 @@ class CartPage extends StatelessWidget {
                                                         child: const Icon(Icons.remove,size: 17,
                                                               color: Colors.black87,),
                                                         onTap: (){
-                                                          cartC.addItem(_cartList[index].productModel!, -1);
+                                                          cartC.addItem(_cartList[index].product!, -1);
                                                         },
                                                       ),
                                                       const SizedBox(width: 5,),
@@ -182,7 +182,7 @@ class CartPage extends StatelessWidget {
                                                         child: const Icon(Icons.add,size: 17,
                                                               color: Colors.black87,),
                                                         onTap: (){
-                                                          cartC.addItem(_cartList[index].productModel!, 1);
+                                                          cartC.addItem(_cartList[index].product!, 1);
                                                         },
                                                       ),
                                                     ],

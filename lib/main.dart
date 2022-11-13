@@ -28,18 +28,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    // Get.find<CartController>().getCartData();
+    Get.find<CartController>().getCartData();
     return GetBuilder<MostPopularController>(builder: (_){
       return GetBuilder<RecommendedController>(builder: (_){
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            fontFamily: 'Acme',
-          ),
-          initialRoute: RouteHelper.getSplashScreen(),
-          getPages: RouteHelper.routes,
-          // home: const RootApp(),
-        );
+        return GetBuilder<CartController>(builder: (_){
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: 'Acme',
+            ),
+            initialRoute: RouteHelper.getSplashScreen(),
+            getPages: RouteHelper.routes,
+            // home: const RootApp(),
+          );
+        });
       });
     });
   }

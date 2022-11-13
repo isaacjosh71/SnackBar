@@ -24,16 +24,14 @@ class Product {
     }
   }
 
-  // Map<String, dynamic> toJson() {
-  //   final Map<String, dynamic> data = <String, dynamic>{};
-  //   data['total_size'] = totalSize;
-  //   data['type_id'] = typeId;
-  //   data['offset'] = offset;
-  //   if (products != null) {
-  //     data['products'] = products!.map((v) => v.toJson()).toList();
-  //   }
-  //   return data;
-  // }
+  Map<String, dynamic> toJson() {
+    return {
+    'total_size' : _totalSize,
+    'type_id': _typeId,
+    'offset': _offset,
+      'products': _products.map((v) => v.toJson()).toList(),
+    };
+  }
 }
 
 class ProductModel {
@@ -75,16 +73,16 @@ class ProductModel {
 
   Map<String, dynamic> toJson() {
     return {
-    'id': id,
-    'name': name,
-    'description':description,
-    'price':price,
-    'stars':stars,
-    'img':img,
-    'location':location,
-    'created_at':createdAt,
-    'updated_at':updatedAt,
-    'type_id':typeId,
+    'id': this.id,
+    'name': this.name,
+    'description':this.description,
+    'price':this.price,
+    'stars':this.stars,
+    'img':this.img,
+    'location':this.location,
+    'created_at':this.createdAt,
+    'updated_at':this.updatedAt,
+    'type_id':this.typeId,
     };
   }
 }
