@@ -117,6 +117,7 @@ class CartController extends GetxController{
   //to show previous cart history when app refreshes
   set setCart(List<CartModel> items){
     storageItems=items;
+    //loop short_form for a continual list of (i)
     for(int i=0; i<storageItems.length; i++){
       _items.putIfAbsent(storageItems[i].product!.id!,
               () => storageItems[i]);
@@ -134,5 +135,9 @@ class CartController extends GetxController{
     //empty map
     _items={};
     update();
+  }
+
+  List<CartModel> getCartHistoryList(){
+    return cartRepo.getCarHistoryList();
   }
 }

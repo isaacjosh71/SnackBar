@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:snack_bar/screens/Cart/cart_history.dart';
 import 'package:snack_bar/screens/Home/home_page.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -127,12 +128,7 @@ class _RootAppState extends State<RootApp> {
               fontSize: 15
           ),),
       ),
-      const Center(
-        child: Text('Magazine',
-          style: TextStyle(
-              fontSize: 15
-          ),),
-      ),
+      const CartHistory(),
       const Center(
         child: Text('Profile',
           style: TextStyle(

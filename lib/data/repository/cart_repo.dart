@@ -17,12 +17,14 @@ class CartRepo{
     // sharedPreferences.remove(AppConstants.CARTLIST);
     // sharedPreferences.remove(AppConstants.CARTHISTORYLIST);
     cart=[];
+    var time = DateTime.now().toString();
     //converting objects to string/json because sharedPreferences only accepts string
     for (var element in cartList) {
+      element.timeCreated = time;
       cart.add(jsonEncode(element));
     }
     sharedPreferences.setStringList(AppConstants.CARTLIST, cart);
-    getCartList();
+    // getCartList();
   }
 
   //get cart list memory
