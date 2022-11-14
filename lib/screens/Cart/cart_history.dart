@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 
@@ -10,7 +11,8 @@ class CartHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var getCartHistoryList = Get.find<CartController>().getCartHistoryList();
+    var getCartHistoryList = Get.find<CartController>().
+    getCartHistoryList().reversed.toList();
     //sorting out cart history based on time per order
     Map<String, int> cartItemsPerOrder = Map();
     //just like continual entries for maps
@@ -31,12 +33,8 @@ class CartHistory extends StatelessWidget {
 
     List<int> itemsPerOrder = cartOrderTimeToList();
 
-    // var saveCounter = 0;
-    // for(int x=0; x<cartItemsPerOrder.length; x++){
-    //   for(int y=0; y<orderTimes.length; y++){
-    //
-    //   }
-    // }
+    var listCounter = 0;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -52,41 +50,89 @@ class CartHistory extends StatelessWidget {
         ],
       ),
       body: Container(
+        height: MediaQuery.of(context).size.height*1,
         margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width*0.055,
-            right: MediaQuery.of(context).size.width*0.055,
-            top: MediaQuery.of(context).size.height*0.035
+          left: MediaQuery.of(context).size.width*0.04,
+            right: MediaQuery.of(context).size.width*0.04,
+            top: MediaQuery.of(context).size.height*0.025
         ),
-        child: ListView(
-          children: [
-            for (int i=0; i<itemsPerOrder.length; i++)
-              Container(
-                margin: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.height*0.035),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Date'),
-                      Wrap(
-                        direction: Axis.horizontal,
-                          children: List.generate(itemsPerOrder[i], (index)
-                          {
-                           return Container(
-                             height: 80, width: 80,
-                             decoration: BoxDecoration(
-                               image: DecorationImage(
-                                 image: NetworkImage(
-                                   AppConstants.BASE_URL+AppConstants.UPLOAD+getCartHistoryList[i].img!,
-                                 )
-                               )
-                             ),
-                           );
-                          }),
-                      )
-                    ],
-                ),
-              )
-          ],
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: ListView(
+            children: [
+              for (int i=0; i<itemsPerOrder.length; i++)
+                Container(
+                  height: 120,
+                  margin: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height*0.02),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ((){
+                          //parsing date time object format of original time format from backend
+                          DateTime parsedDate = DateFormat('yyyy-MM-dd HH:mm:ss').parse(getCartHistoryList[listCounter].timeCreated!);
+                          //convert to string to be used in Text format
+                          var inputDate = DateTime.parse(parsedDate.toString());
+                          //convert to date time format needed to be displayed of preferred choice
+                          var outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
+                          var outputDate = outputFormat.format(inputDate);
+                          return Text(outputDate, style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black87, fontSize: 18),);
+                        }()),
+                        const SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Wrap(
+                            direction: Axis.horizontal,
+                              children: List.generate(itemsPerOrder[i], (index){
+                                if(listCounter<getCartHistoryList.length){
+                                  listCounter++;
+                                }
+                               return index<=2 ? Container(
+                                 height: 80, width: 80,
+                                 margin: const EdgeInsets.only(right: 10),
+                                 decoration: BoxDecoration(
+                                     borderRadius: BorderRadius.circular(8),
+                                     image: DecorationImage(
+                                         fit: BoxFit.cover,
+                                         image: NetworkImage(
+                                           AppConstants.BASE_URL+AppConstants.UPLOAD+getCartHistoryList[listCounter-1].img!,
+                                         )
+                                     )
+                                 ),
+                               ) : Container();
+                              }),
+                          ),
+                          Container(
+                            height: 80,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                const Text('Total', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300,
+                                color: Colors.black87),),
+                                Text(itemsPerOrder[i].toString()+' Items',
+                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300,
+                                        color: Colors.black87)),
+                                Container(
+                                  height: 25,width: 75,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(color: Colors.orangeAccent, width: 1.5),
+                                  ),
+                                  child: const Center(child: Text('Reorder')),
+                                )
+                              ],
+                            ),
+                          )
+                          ]
+                        )
+                      ],
+                  ),
+                )
+            ],
+          ),
         ),
       ),
     );
