@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/data/controllers/recommended_ctlr.dart';
+import 'package:snack_bar/helpers/cart_foundation.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/helpers/router.dart';
 import 'package:snack_bar/screens/Home/root_app.dart';
@@ -64,144 +65,152 @@ class CartPage extends StatelessWidget {
                   ),
                 ],
               )),
-          Positioned(
-              top: size.height*0.15,
-              left: size.width*0.05,
-              right: size.width*0.05,
-              bottom: 0,
-              child: MediaQuery.removePadding(
-                context: context,
+          GetBuilder<CartController>(builder: (_cartC){
+            return _cartC.getItems.isNotEmpty
+                ? Positioned(
+                top: size.height*0.15,
+                left: size.width*0.05,
+                right: size.width*0.05,
+                bottom: 0,
+                child: MediaQuery.removePadding(
+                  context: context,
                   removeTop: true,
-                child: GetBuilder<CartController>(builder: (cartC){
-                  var _cartList = cartC.getItems;
-                  return ListView.builder(
-                      itemCount: _cartList.length,
-                      itemBuilder: (_, index){
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 3),
-                          child: Container(
-                            width: double.maxFinite,
-                            height: MediaQuery.of(context).size.height * 0.12,
-                            margin: const EdgeInsets.only(left: 5, right: 5, top: 10,bottom: 10),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFFFFFFA),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: (){
-                                    var mostPopularIndex = Get.find<MostPopularController>()
-                                        .mostPopularList
-                                        .indexOf(_cartList[index].product!);
-                                    if(mostPopularIndex>=0){
-                                      Get.toNamed(RouteHelper.getMostPopular(mostPopularIndex,'cartPage'));
-                                    }else{
-                                      var recommendedIndex = Get.find<RecommendedController>()
-                                          .recommendedList
+                  child: GetBuilder<CartController>(builder: (cartC){
+                    var _cartList = cartC.getItems;
+                    return ListView.builder(
+                        itemCount: _cartList.length,
+                        itemBuilder: (_, index){
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 3),
+                            child: Container(
+                              width: double.maxFinite,
+                              height: MediaQuery.of(context).size.height * 0.12,
+                              margin: const EdgeInsets.only(left: 5, right: 5, top: 10,bottom: 10),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFFFFFA),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  GestureDetector(
+                                    onTap: (){
+                                      var mostPopularIndex = Get.find<MostPopularController>()
+                                          .mostPopularList
                                           .indexOf(_cartList[index].product!);
-                                        Get.toNamed(RouteHelper.getRecommended(recommendedIndex, 'cartPage'));
-                                    }
-                                  },
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height * 0.12,
-                                    width: MediaQuery.of(context).size.width * 0.30,
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(topLeft:Radius.circular(10),
-                                          bottomLeft: Radius.circular(10) ),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                            AppConstants.BASE_URL+AppConstants.UPLOAD+cartC.getItems[index].img!
+                                      if(mostPopularIndex>=0){
+                                        Get.toNamed(RouteHelper.getMostPopular(mostPopularIndex,'cartPage'));
+                                      }else{
+                                        var recommendedIndex = Get.find<RecommendedController>()
+                                            .recommendedList
+                                            .indexOf(_cartList[index].product!);
+                                        if(recommendedIndex<0){
+                                          Get.snackbar('History Product', 'Product review is not available for history products');
+                                        }else{
+                                          Get.toNamed(RouteHelper.getRecommended(recommendedIndex, 'cartPage'));
+                                        }
+                                      }
+                                    },
+                                    child: Container(
+                                      height: MediaQuery.of(context).size.height * 0.12,
+                                      width: MediaQuery.of(context).size.width * 0.30,
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(topLeft:Radius.circular(10),
+                                            bottomLeft: Radius.circular(10) ),
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              AppConstants.BASE_URL+AppConstants.UPLOAD+cartC.getItems[index].img!
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: size.width*0.05,
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height * 0.12,
-                                    margin: const EdgeInsets.only(top: 10, bottom: 10),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(cartC.getItems[index].name!,
-                                          style: const TextStyle(color: Colors.blue,
-                                            fontSize: 16,
+                                  SizedBox(
+                                    width: size.width*0.05,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      height: MediaQuery.of(context).size.height * 0.12,
+                                      margin: const EdgeInsets.only(top: 10, bottom: 10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(cartC.getItems[index].name!,
+                                            style: const TextStyle(color: Colors.blue,
+                                              fontSize: 16,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: size.height*0.02,
-                                        ),
-                                        Expanded(
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                height: size.height*0.045,
-                                                width: size.width*0.1,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(7),
-                                                  color: Colors.grey.shade200
-                                                ),
-                                                child: Center(
-                                                  child: Text(cartC.getItems[index].price.toString(),
-                                                    style: const TextStyle(color: Colors.black87),
+                                          SizedBox(
+                                            height: size.height*0.02,
+                                          ),
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  height: size.height*0.045,
+                                                  width: size.width*0.1,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(7),
+                                                      color: Colors.grey.shade200
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(cartC.getItems[index].price.toString(),
+                                                      style: const TextStyle(color: Colors.black87),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              SizedBox(width: size.width*0.18,),
-                                              Container(
-                                                height: size.height*0.05,
-                                                width: size.width*0.18,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(7),
-                                                    color: Colors.grey.shade200
-                                                ),
-                                                child: Center(
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      GestureDetector(
-                                                        child: const Icon(Icons.remove,size: 17,
-                                                              color: Colors.black87,),
-                                                        onTap: (){
-                                                          cartC.addItem(_cartList[index].product!, -1);
-                                                        },
-                                                      ),
-                                                      const SizedBox(width: 5,),
-                                                      Text(_cartList[index].quantity.toString()),
-                                                      const SizedBox(width: 5,),
-                                                      GestureDetector(
-                                                        child: const Icon(Icons.add,size: 17,
-                                                              color: Colors.black87,),
-                                                        onTap: (){
-                                                          cartC.addItem(_cartList[index].product!, 1);
-                                                        },
-                                                      ),
-                                                    ],
+                                                SizedBox(width: size.width*0.18,),
+                                                Container(
+                                                  height: size.height*0.05,
+                                                  width: size.width*0.18,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(7),
+                                                      color: Colors.grey.shade200
+                                                  ),
+                                                  child: Center(
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: [
+                                                        GestureDetector(
+                                                          child: const Icon(Icons.remove,size: 17,
+                                                            color: Colors.black87,),
+                                                          onTap: (){
+                                                            cartC.addItem(_cartList[index].product!, -1);
+                                                          },
+                                                        ),
+                                                        const SizedBox(width: 5,),
+                                                        Text(_cartList[index].quantity.toString()),
+                                                        const SizedBox(width: 5,),
+                                                        GestureDetector(
+                                                          child: const Icon(Icons.add,size: 17,
+                                                            color: Colors.black87,),
+                                                          onTap: (){
+                                                            cartC.addItem(_cartList[index].product!, 1);
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),),
-                              ],
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      });
-                }),
-              ))
+                          );
+                        });
+                  }),
+                ))
+                : const CartFoundation(text: 'Your cart is empty');
+          })
         ],
       ),
       bottomNavigationBar: GetBuilder<CartController>(builder: (cartC){
@@ -212,7 +221,8 @@ class CartPage extends StatelessWidget {
           decoration: BoxDecoration(
             color: const Color(0xFFE6E9ED).withOpacity(0.5),
           ),
-          child: Row(
+          child: cartC.getItems.isNotEmpty
+            ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
@@ -242,7 +252,8 @@ class CartPage extends StatelessWidget {
                 ),
               )
             ],
-          ),
+          )
+              : Container()
         );
       },
       ),

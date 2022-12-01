@@ -9,4 +9,6 @@ class AppConstants {
   static const String UPLOAD = "/uploads/";
   static const String CARTLIST = "cartList";
   static const String CARTHISTORYLIST = "cartHistoryList";
+  static const String PHONE = "";
+  static const String PASSWORD = "";
 }

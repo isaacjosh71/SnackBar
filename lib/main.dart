@@ -5,6 +5,7 @@ import 'package:snack_bar/screens/Cart/cart_page.dart';
 import 'package:snack_bar/screens/Home/home_page.dart';
 import 'package:snack_bar/screens/Home/recommended.dart';
 import 'package:snack_bar/screens/Home/root_app.dart';
+import 'package:snack_bar/validations/signIn.dart';
 import 'package:snack_bar/validations/splash.dart';
 import 'package:sizer/sizer.dart';
 import 'data/controllers/most_popular_ctlr.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
             ),
             initialRoute: RouteHelper.getSplashScreen(),
             getPages: RouteHelper.routes,
-            // home: const RootApp(),
+            // home: const SignIn(),
           );
         });
       });

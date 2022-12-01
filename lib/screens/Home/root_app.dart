@@ -5,6 +5,7 @@ import 'package:snack_bar/screens/Cart/cart_history.dart';
 import 'package:snack_bar/screens/Home/home_page.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:snack_bar/screens/Profile/profile_page.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
@@ -129,12 +130,7 @@ class _RootAppState extends State<RootApp> {
           ),),
       ),
       const CartHistory(),
-      const Center(
-        child: Text('Profile',
-          style: TextStyle(
-              fontSize: 15
-          ),),
-      )
+      const ProfilePage()
     ];
   }
 

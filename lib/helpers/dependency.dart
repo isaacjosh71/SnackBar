@@ -2,12 +2,14 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snack_bar/data/api/api_client.dart';
+import 'package:snack_bar/data/controllers/auth_ctlr.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/data/repository/cart_repo.dart';
 import 'package:snack_bar/data/repository/most_popular_repo.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import '../data/controllers/recommended_ctlr.dart';
+import '../data/repository/auth_repo.dart';
 import '../data/repository/recommended_repo.dart';
 
 Future<void> init() async{
@@ -22,9 +24,11 @@ Future<void> init() async{
   Get.lazyPut(() => MostPopularRepo(apiClient: Get.find()));
   Get.lazyPut(() => RecommendedRepo(apiClient: Get.find()));
   Get.lazyPut(()=> CartRepo(sharedPreferences: Get.find()));
+  Get.lazyPut(()=> AuthRepo(sharedPreferences: Get.find(), apiClient: Get.find()));
 
   //controllers
   Get.lazyPut(() => MostPopularController(mostPopularRepo: Get.find()));
   Get.lazyPut(() => RecommendedController(recommendedRepo: Get.find()));
   Get.lazyPut(() => CartController(cartRepo: Get.find()));
+  Get.lazyPut(() => AuthController(authRepo: Get.find()));
 }

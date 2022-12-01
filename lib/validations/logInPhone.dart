@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:snack_bar/validations/logIn.dart';
-import 'package:snack_bar/validations/logInPhone.dart';
 import 'package:snack_bar/validations/signIn.dart';
 
-class LogInEmail extends StatefulWidget {
-  const LogInEmail({Key? key}) : super(key: key);
+class LogInPhone extends StatefulWidget {
+  const LogInPhone({Key? key}) : super(key: key);
 
   @override
-  State<LogInEmail> createState() => _LogInEmailState();
+  State<LogInPhone> createState() => _LogInPhoneState();
 }
 
-class _LogInEmailState extends State<LogInEmail> {
-  final TextEditingController _mailController = TextEditingController();
+class _LogInPhoneState extends State<LogInPhone> {
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
 
   bool _obscureText = true;
@@ -30,15 +29,15 @@ class _LogInEmailState extends State<LogInEmail> {
     //   _onPressed=() async{
     //     try {
     //       var authController = Get.find<AuthController>();
-    //       String mail = _mailController.text.trim();
+    //       String phone = _phoneController.text.trim();
     //       String password = _passController.text.trim();
     //
-    //       if(mail.isEmpty || !GetUtils.isEmail(mail)){
-    //         Get.snackbar('Email', 'Please type in a valid email');}
+    //       if(phone.isEmpty || !GetUtils.isPhoneNumber(phone)) {
+    //         Get.snackbar('Phone', 'Please type in a valid phone number');}
     //       else if(password.length < 6){
     //         Get.snackbar('Password', 'Password can\'t be less than 6 characters');}
     //       else{
-    //         SignUpBody signUpBody = SignUpBody(mail: mail, password: password);
+    //         SignUpBody signUpBody = SignUpBody(phone: phone, password: password,);
     //         print(signUpBody);
     //         authController.registration(signUpBody).then((status){
     //           if(!status.isError){
@@ -75,7 +74,7 @@ class _LogInEmailState extends State<LogInEmail> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Email',
+                    const Text('Phone Number',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
@@ -84,11 +83,11 @@ class _LogInEmailState extends State<LogInEmail> {
                     TextFieldContainer(
                       child: TextFormField(
                         textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _mailController,
+                        keyboardType: TextInputType.phone,
+                        controller: _phoneController,
                         onSaved: (value){},
                         decoration: const InputDecoration(
-                          hintText: 'Input email',
+                          hintText: 'Input phone number',
                           hintStyle: TextStyle(
                             color: Colors.grey,
                             fontSize: 15,
@@ -98,13 +97,13 @@ class _LogInEmailState extends State<LogInEmail> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: (){
-                        Get.to(const LogInPhone());
-                      },
-                        child: Text('Log in with phone',
+                        onTap: (){
+                          Get.to(const LogInEmail());
+                        },
+                        child: Text('Log in with email',
                           textAlign: TextAlign.end,
                           style: TextStyle(color: Colors.brown.shade400,
-                          fontWeight: FontWeight.w300, fontSize: 16
+                              fontWeight: FontWeight.w300, fontSize: 16
                           ),)),
                     const SizedBox(
                       height: 20,
