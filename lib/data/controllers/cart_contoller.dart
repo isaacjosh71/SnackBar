@@ -15,6 +15,12 @@ class CartController extends GetxController{
 
   List<CartModel> storageItems = [];
 
+  int _paymentIndex=0;
+  int get paymentIndex=>_paymentIndex;
+
+  String _note='';
+  String get note=>_note;
+
   //products adding to cart
   void addItem(ProductModel product, int quantity){
     //add item to cart
@@ -147,9 +153,23 @@ class CartController extends GetxController{
     _items=setItems;
   }
 
+  void clearCartHistory(){
+    cartRepo.clearCartHistory();
+    update();
+  }
+
   //from cart history reorder
   void addToCartListReorder(){
     cartRepo.addToCartList(getItems);
     update();
+  }
+
+  void setPaymentIndex(int index){
+    _paymentIndex=index;
+    update();
+  }
+
+  void sendFoodNote(String foodNote){
+    _note=foodNote;
   }
 }

@@ -65,7 +65,14 @@ class CartRepo{
 
   //remove all cart items once checkout
   void removeCart(){
+    cart=[];
     sharedPreferences.remove(AppConstants.CARTLIST
     );
 }
+
+  void clearCartHistory(){
+    removeCart();
+    cartHistory=[];
+    sharedPreferences.remove(AppConstants.CARTHISTORYLIST);
+  }
 }

@@ -2,16 +2,15 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:snack_bar/screens/Home/snack_categories.dart';
 import 'package:snack_bar/widgets/store_card.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:snack_bar/helpers/categories.dart';
-import '../../data/controllers/most_popular_ctlr.dart';
 import '../../helpers/router.dart';
 import '../../widgets/dish_card.dart';
+import '../Customer_Service_Chat/chat_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -77,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                             icon: const Icon( Icons.chat_outlined,
                             color: Color(0xFF2B3849),),
                             onPressed: () {
-                              Navigator.pushNamed(context, "/customer_care");
+                              Get.to(const ChatPage());
                             },),
                         ],
                       )
@@ -118,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       isRepeatingAnimation: false,
                     ),
+                    SizedBox(height: 5,),
                     const Text(
                       'Kindly place an order',
                       overflow: TextOverflow.ellipsis,

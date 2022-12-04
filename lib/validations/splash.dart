@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     //load api list init
-    _loadResources();
+    // _loadResources();
 
     //logo animation
     controller = AnimationController(vsync: this, duration: const Duration(seconds: 2))..forward();
@@ -30,15 +30,15 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin {
 
     //screen navigation timer
     Timer(const Duration(seconds: 5),
-            ()=>Get.offNamed(RouteHelper.getInitial()));
+            ()=>Get.offNamed(RouteHelper.getOnBoarding()));
   }
 
   late Animation<double> animation;
   late AnimationController controller;
-  Future<void> _loadResources() async{
-    await Get.find<MostPopularController>().getMostPopularList();
-    await Get.find<RecommendedController>().getRecommendedList();
-  }
+  // Future<void> _loadResources() async{
+  //   await Get.find<MostPopularController>().getMostPopularList();
+  //   await Get.find<RecommendedController>().getRecommendedList();
+  // }
 
   @override
   Widget build(BuildContext context) {

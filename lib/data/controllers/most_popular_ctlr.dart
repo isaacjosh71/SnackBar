@@ -1,10 +1,8 @@
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/repository/most_popular_repo.dart';
 import 'package:snack_bar/models/product_model.dart';
-
 import '../../models/cart_model.dart';
 
 class MostPopularController extends GetxController{

@@ -1,7 +1,10 @@
 
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:snack_bar/helpers/content.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:snack_bar/helpers/router.dart';
 import 'package:snack_bar/validations/signIn.dart';
 
 class Slide extends StatefulWidget {
@@ -139,8 +142,7 @@ class _SlideState extends State<Slide> {
                     ),
                     onTap: () {
                       if (currentIndex == contents.length - 1){
-                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                            builder: (builder)=> const SignIn()), (route) => false);
+                        Get.offNamed(RouteHelper.getSignUpPage());
                       }
                       _controller.nextPage(duration: const Duration(milliseconds: 100),
                           curve: Curves.bounceIn);

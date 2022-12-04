@@ -54,7 +54,7 @@ class _SignInState extends State<SignIn> {
             authController.signUpUser(signUpBody).then((status){
               if(status.isSuccess){
                 print('successful registration');
-                Get.offAll(()=> const RootApp());
+                Get.offNamed(RouteHelper.getInitial());
               } else{Get.snackbar('Error', 'Wrong Authentication');}
             });
           }
@@ -67,8 +67,8 @@ class _SignInState extends State<SignIn> {
     }
     return Scaffold(
       body:
-      GetBuilder<AuthController>(builder: (_authController){
-        return !_authController.isLoading?
+      GetBuilder<AuthController>(builder: (authController){
+        return !authController.isLoading?
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(
@@ -231,7 +231,7 @@ class _SignInState extends State<SignIn> {
                             ),),
                           GestureDetector(
                             onTap: (){
-                              Get.to(() => const LogInEmail());
+                              Get.toNamed(RouteHelper.getLogInPage());
                             },
                             child: const Text('  log in',
                               textAlign: TextAlign.justify,
