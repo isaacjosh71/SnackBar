@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snack_bar/data/controllers/auth_ctlr.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/data/controllers/recommended_ctlr.dart';
@@ -238,7 +239,11 @@ class CartPage extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-                  cartC.addCartHistory();
+                  if(Get.find<AuthController>().userLoggedIn()){
+                    cartC.addCartHistory();
+                  } else {
+                    Get.toNamed(RouteHelper.getLogInPage());
+                  }
                 },
                 child: Container(
                   padding: EdgeInsets.only( bottom: size.width * 0.04,

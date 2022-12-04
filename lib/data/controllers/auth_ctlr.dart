@@ -20,8 +20,8 @@ class AuthController extends GetxController implements GetxService{
     if (response.statusCode == 200 || response.statusCode == 201){
       authRepo.saveUserToken(response.body['token']);
       print('My token is${response.body['token'].toString()}');
-      responseModel = ResponseModel(false, response.body['token']);
-    }else{responseModel = ResponseModel(true, response.statusText!);}
+      responseModel = ResponseModel(true, response.body['token']);
+    }else{responseModel = ResponseModel(false, response.statusText!);}
     _isLoading = false;
     update();
     return responseModel;
@@ -35,10 +35,11 @@ class AuthController extends GetxController implements GetxService{
     Response response = await authRepo.loginUser(logInBody);
     late ResponseModel responseModel;
     if (response.statusCode == 200 || response.statusCode == 201){
+      print('Backend Token');
       authRepo.saveUserToken(response.body['token']);
       print('My token is${response.body['token'].toString()}');
-      responseModel = ResponseModel(false, response.body.toString());
-    }else{responseModel = ResponseModel(true, response.statusText!);}
+      responseModel = ResponseModel(true, response.body['token']);
+    }else{responseModel = ResponseModel(false, response.statusText!);}
     _isLoading = false;
     update();
     return responseModel;

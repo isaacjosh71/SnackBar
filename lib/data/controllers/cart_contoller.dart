@@ -147,6 +147,11 @@ class CartController extends GetxController{
     _items=setItems;
   }
 
+  void clearCartHistory(){
+    cartRepo.clearCartHistory();
+    update();
+  }
+
   //from cart history reorder
   void addToCartListReorder(){
     cartRepo.addToCartList(getItems);

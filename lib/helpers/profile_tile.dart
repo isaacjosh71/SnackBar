@@ -20,9 +20,10 @@ class ProfileTile extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(tileIcon, color: Colors.black54, size: 25,),
+              Icon(tileIcon, color: Colors.black87, size: 25,),
               const SizedBox(width: 23,),
               Text(text,
+                textAlign: TextAlign.justify,
                 style: const TextStyle(fontSize: 18,
                     fontWeight: FontWeight.w400, color: Color(0xFF455A64)),)
             ],

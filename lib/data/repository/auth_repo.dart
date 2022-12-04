@@ -15,11 +15,11 @@ class AuthRepo {
   });
 
   Future<Response>signUpUser(SignUpBody signUpBody) async {
-    return await apiClient.postData('http://127.0.0.1:8000/api/v1/auth/register', signUpBody.toJson());
+    return await apiClient.postData(AppConstants.SIGNUP_URI, signUpBody.toJson());
   }
 
   Future<Response>loginUser(LogInBody logInBody) async {
-    return await apiClient.postData('http://127.0.0.1:8000/api/v1/auth/login', logInBody.toJson());
+    return await apiClient.postData(AppConstants.LOGIN_URI, logInBody.toJson());
   }
 
   getUserToken() async{

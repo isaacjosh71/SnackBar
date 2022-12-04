@@ -118,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                       isRepeatingAnimation: false,
                     ),
+                    SizedBox(height: 5,),
                     const Text(
                       'Kindly place an order',
                       overflow: TextOverflow.ellipsis,
