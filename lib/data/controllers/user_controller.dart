@@ -6,6 +6,10 @@ import 'package:snack_bar/data/repository/user_repo.dart';
 import 'package:snack_bar/models/user_model.dart';
 
 import '../../models/auth_models/response_model.dart';
+<<<<<<< HEAD
+=======
+import '../../models/auth_models/signup_body.dart';
+>>>>>>> origin/main
 
 class UserController extends GetxController implements GetxService {
   final UserRepo userRepo;
@@ -20,6 +24,11 @@ class UserController extends GetxController implements GetxService {
   UserModel get userModel => _userModel;
 
   Future<ResponseModel> userInfo() async {
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/main
     Response response = await userRepo.getUserInfo();
     late ResponseModel responseModel;
     if (response.statusCode == 200 || response.statusCode == 201) {

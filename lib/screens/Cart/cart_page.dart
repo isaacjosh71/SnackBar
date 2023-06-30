@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:snack_bar/data/controllers/auth_ctlr.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
-import 'package:snack_bar/data/controllers/location_controller.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/data/controllers/recommended_ctlr.dart';
-import 'package:snack_bar/data/controllers/user_controller.dart';
 import 'package:snack_bar/helpers/cart_foundation.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/helpers/router.dart';
-import 'package:snack_bar/screens/Discover/address_page.dart';
 import 'package:snack_bar/screens/Home/root_app.dart';
-import 'package:snack_bar/widgets/make_paystack.dart';
-import 'package:snack_bar/widgets/payment_option.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
     var size=MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white.withOpacity(0.97),
@@ -220,146 +213,50 @@ class CartPage extends StatelessWidget {
           })
         ],
       ),
-      bottomNavigationBar: GetBuilder<UserController>(builder: (userC){
-        return GetBuilder<CartController>(builder: (cartC){
-          controller.text=cartC.note;
-          return Container(
-              height: size.height * 0.15,
-              padding: EdgeInsets.only( left: size.width * 0.085,
-                  right: size.width * 0.10),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE6E9ED).withOpacity(0.5),
+      bottomNavigationBar: GetBuilder<CartController>(builder: (cartC){
+        return Container(
+          height: size.height * 0.1,
+          padding: EdgeInsets.only( left: size.width * 0.085,
+              right: size.width * 0.10),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE6E9ED).withOpacity(0.5),
+          ),
+          child: cartC.getItems.isNotEmpty
+            ? Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height*0.05, width: MediaQuery.of(context).size.width*0.15,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(7)
+                ),
+                child: Center(child: Text("N "+cartC.totalAmount.toString())),
               ),
-              child: cartC.getItems.isNotEmpty
-                  ?
-              Column(
-                children: [
-                  InkWell(
-                    onTap: ()=>showModalBottomSheet(context: context,
-                        backgroundColor: Colors.transparent,
-                        builder:(_){
-                          return Column(
-                            children: [
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height*0.9,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(10), topLeft: Radius.circular(10)
-                                        )
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 520,
-                                          padding: EdgeInsets.only(
-                                            left: 15, right: 15,
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              const PaymentOption(iconData: Icons.money,
-                                                  title: "Cash on delivery",
-                                                  subtitle: "you can pay on delivery",
-                                                  index: 0),
-                                              SizedBox(height: 10,),
-                                              PaymentOption(iconData: Icons.paypal_sharp,
-                                                  title: "Digital payment",
-                                                  subtitle: "you can pay by transfer",
-                                                  index: 0),
-                                              SizedBox(height: 10,),
-                                              Text('Additional notes', style: TextStyle(fontSize: 17),),
-                                              TextField(
-                                                controller: controller,
-                                                decoration: InputDecoration(
-                                                    hintText: '', prefixIcon: Icon(Icons.note, color: Colors.orangeAccent,)
-                                                ),
-                                              )
-                                            ],
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        }).whenComplete(() => cartC.sendFoodNote(controller.text.trim())),
-                    child: SizedBox(
-                      width: double.maxFinite,
-                      child: Container(
-                        padding: EdgeInsets.only( bottom: size.width * 0.02,
-                            top: size.width * 0.04,
-                            left: size.width*0.05, right: size.width*0.05),
-                        decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                  offset: Offset(0, 5),
-                                  blurRadius: 10, color:Colors.orangeAccent
-                              )
-                            ],
-                            color: Colors.orangeAccent,
-                            borderRadius: BorderRadius.circular(13)
-                        ),
-                        child: const Center(child: Text('Payment Option')),
-                      ),
-                    ),
+              const SizedBox(
+                width: 5,
+              ),
+              InkWell(
+                onTap: (){
+                  cartC.addCartHistory();
+                },
+                child: Container(
+                  padding: EdgeInsets.only( bottom: size.width * 0.04,
+                      top: size.width * 0.04,
+                      left: size.width*0.05, right: size.width*0.05),
+                  decoration: BoxDecoration(
+                      color: Colors.orangeAccent,
+                      borderRadius: BorderRadius.circular(13)
                   ),
-                  const SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height*0.05, width: MediaQuery.of(context).size.width*0.15,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(7)
-                        ),
-                        child: Center(child: Text("N "+cartC.totalAmount.toString())),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      InkWell(
-                        onTap: (){
-                          if(Get.find<AuthController>().userLoggedIn()){
-                            print('user logged in');
-                          if(Get.find<LocationController>().addressList.isEmpty){
-                            // Get.toNamed(RouteHelper.getAddressPage());
-                            MakePayment(ctx: context, email: 'userC.userModel.email', price: cartC.totalAmount).chargeCard();
-                          }else{
-                            Get.offNamed(RouteHelper.getInitial());
-                          }
-                          cartC.addCartHistory();
-                          }
-                          else {
-                            Get.toNamed(RouteHelper.getLogInPage());
-                          }
-                        },
-                        child: Container(
-                          padding: EdgeInsets.only( bottom: size.width * 0.04,
-                              top: size.width * 0.04,
-                              left: size.width*0.05, right: size.width*0.05),
-                          decoration: BoxDecoration(
-                              color: Colors.orangeAccent,
-                              borderRadius: BorderRadius.circular(13)
-                          ),
-                          child: const Text('Checkout'),
-                        ),
-                      )
-                    ],
-                  )
-                ],
+                  child: const Text('Checkout'),
+                ),
               )
-                  : Container()
-          );
-        },
+            ],
+          )
+              : Container()
         );
-      })
+      },
+      ),
     );
   }
 }
-
