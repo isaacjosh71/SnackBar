@@ -1,14 +1,12 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:snack_bar/screens/Home/snack_categories.dart';
 import 'package:snack_bar/widgets/store_card.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:snack_bar/helpers/categories.dart';
-import '../../helpers/router.dart';
 import '../../widgets/dish_card.dart';
 import '../Customer_Service_Chat/chat_page.dart';
 

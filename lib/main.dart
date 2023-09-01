@@ -20,11 +20,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await dep.init();
-  runApp(const MyApp());
+  runApp(const MyApp(token: '',));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required String token}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

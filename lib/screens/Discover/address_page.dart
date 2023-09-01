@@ -111,7 +111,7 @@ class _AddressPageState extends State<AddressPage> {
                         onMapCreated: (GoogleMapController controller){
                           locationController.setMapController(controller);
                           if(Get.find<LocationController>().addressList.isEmpty){
-                            //locationController.getCurrentLocation(true, mapController: controller);
+                            // locationController.getCurrentLocation(true, mapController: controller);
                           }
                         },
                         onTap: (latLng){
