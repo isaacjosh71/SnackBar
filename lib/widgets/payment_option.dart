@@ -29,10 +29,10 @@ class PaymentOption extends StatelessWidget {
           ),
           child: ListTile(
             leading: Icon(iconData,
-              size: 40, color: _selected?Theme.of(context).disabledColor:null,
+              size: 40, color: _selected?Theme.of(context).primaryColor:null,
             ),
             title: Text(title, style: TextStyle(
-              color: Theme.of(context).disabledColor,
+              color: Colors.black87,
               fontSize: 17,),),
             subtitle: Text(subtitle,
               maxLines: 1, overflow: TextOverflow.ellipsis,

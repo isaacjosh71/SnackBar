@@ -1,15 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
 import 'package:snack_bar/data/controllers/recommended_ctlr.dart';
+import 'package:snack_bar/data/controllers/user_controller.dart';
 import 'package:snack_bar/helpers/cart_foundation.dart';
 import 'package:snack_bar/helpers/app_const.dart';
 import 'package:snack_bar/helpers/router.dart';
+import 'package:snack_bar/screens/Home/home_page.dart';
 import 'package:snack_bar/screens/Home/root_app.dart';
+import 'package:snack_bar/widgets/make_paystack.dart';
+import 'package:snack_bar/widgets/payment_option.dart';
 
-class CartPage extends StatelessWidget {
+import '../../data/controllers/location_controller.dart';
+
+class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
+
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  TextEditingController controller = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+
+
+  void initState(){
+    super.initState();
+    if(Get.find<LocationController>().addressList.isNotEmpty){
+      if(Get.find<LocationController>().getUserAddressFromLocalStorage()==""){
+        Get.find<LocationController>().saveUserAddress(
+            Get.find<LocationController>().addressList.last
+        );
+      }
+      Get.find<LocationController>().getUserAddress();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -213,50 +241,169 @@ class CartPage extends StatelessWidget {
           })
         ],
       ),
-      bottomNavigationBar: GetBuilder<CartController>(builder: (cartC){
-        return Container(
-          height: size.height * 0.1,
-          padding: EdgeInsets.only( left: size.width * 0.085,
-              right: size.width * 0.10),
-          decoration: BoxDecoration(
-            color: const Color(0xFFE6E9ED).withOpacity(0.5),
-          ),
-          child: cartC.getItems.isNotEmpty
-            ? Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height*0.05, width: MediaQuery.of(context).size.width*0.15,
+      bottomNavigationBar:
+      GetBuilder<UserController>(builder: (userC){
+          if(Get.find<LocationController>().addressList.isNotEmpty){
+            _addressController.text = Get.find<LocationController>().getUserAddress()
+                .address;
+          }
+        return GetBuilder<LocationController>(builder: (locationC){
+          _addressController.text = "${locationC.placemark.name??''}"
+              '${locationC.placemark.locality??''}'
+              '${locationC.placemark.postalCode??''}'
+              '${locationC.placemark.country??''}';
+          print('address in my view is'+_addressController.text);
+          return GetBuilder<CartController>(builder: (cartC){
+            controller.text=cartC.note;
+            return Container(
+                height: size.height * 0.1,
+                padding: EdgeInsets.only( left: size.width * 0.085,
+                    right: size.width * 0.10),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(7)
+                  color: const Color(0xFFE6E9ED).withOpacity(0.5),
                 ),
-                child: Center(child: Text("N "+cartC.totalAmount.toString())),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              InkWell(
-                onTap: (){
-                  cartC.addCartHistory();
-                },
-                child: Container(
-                  padding: EdgeInsets.only( bottom: size.width * 0.04,
-                      top: size.width * 0.04,
-                      left: size.width*0.05, right: size.width*0.05),
-                  decoration: BoxDecoration(
-                      color: Colors.orangeAccent,
-                      borderRadius: BorderRadius.circular(13)
-                  ),
-                  child: const Text('Checkout'),
-                ),
-              )
-            ],
-          )
-              : Container()
-        );
-      },
-      ),
+                child: cartC.getItems.isNotEmpty
+                    ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height*0.05, width: MediaQuery.of(context).size.width*0.15,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(7)
+                      ),
+                      child: Center(child: Text("N "+cartC.totalAmount.toString(), style: TextStyle(fontSize: 15),),),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                     InkWell(
+                      onTap: ()=> showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context, builder: (_){
+                        return Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Container(
+                                  height: size.height*0.9,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
+                                      )
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 520,
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20, bottom: 20, top: 20
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(height: 10,),
+                                            const PaymentOption(
+                                                iconData: Icons.money,
+                                                title: "Cash on delivery",
+                                                subtitle: "This service is unavailable",
+                                                index: 0),
+                                            SizedBox(height: 20,),
+                                            const PaymentOption(
+                                                iconData: Icons.paypal_sharp,
+                                                title: "Pay via Paystack",
+                                                subtitle: "Pay online",
+                                                index: 1),
+                                            SizedBox(height: 20,),
+                                            Text('Additional Note', style: TextStyle(fontSize: 16),),
+                                            TextFieldCase(child:
+                                            Row(
+                                              children: [
+                                                Flexible(
+                                                  child: TextField(
+                                                    cursorColor: Theme.of(context).disabledColor,
+                                                    showCursor: true,
+                                                    decoration: const InputDecoration(
+                                                      hintText: '',
+                                                      hintStyle: TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 15,
+                                                      ),
+                                                      border: InputBorder.none,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            ),
+                                            SizedBox(height: 10,),
+                                            TextField(
+                                              controller: _addressController,
+                                              decoration: const InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Your address",
+                                                hintStyle: TextStyle(
+                                                    color: Colors.black87, fontSize: 17
+                                                ),
+                                                prefixIcon: Icon(Icons.location_city_rounded,
+                                                  size: 24, color: Colors.orangeAccent,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 20,),
+                                            Center(
+                                              child: GestureDetector(
+                                                onTap: (){
+                                                  MakePayment(ctx: context, email: userC.userModel!.email, price: cartC.totalAmount).chargeCard();
+                                                },
+                                                child: Container(
+                                                  padding: EdgeInsets.only( bottom: size.width * 0.04,
+                                                      top: size.width * 0.04,
+                                                      left: size.width*0.05, right: size.width*0.05),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.orangeAccent,
+                                                      borderRadius: BorderRadius.circular(13)
+                                                  ),
+                                                  child: const Text('Checkout',
+                                                    style: TextStyle(fontSize: 16),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }).whenComplete(() => cartC.sendFoodNote(controller.text.trim())),
+                      child: Container(
+                        padding: EdgeInsets.only( bottom: size.width * 0.04,
+                            top: size.width * 0.04,
+                            left: size.width*0.05, right: size.width*0.05),
+                        decoration: BoxDecoration(
+                            color: Colors.orangeAccent,
+                            borderRadius: BorderRadius.circular(13)
+                        ),
+                        child: const Text('Make Payment',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    )
+                  ],
+                )
+                    : Container()
+            );
+          },);
+        });
+      })
     );
   }
 }

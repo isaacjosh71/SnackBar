@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;

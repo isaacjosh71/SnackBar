@@ -47,6 +47,10 @@ class RouteHelper{
 
     GetPage(name: onBoarding, page: ()=>const Slide()),
 
+    GetPage(name: initial, page: (){
+      return const RootApp();
+    }, transition: Transition.leftToRightWithFade),
+
     GetPage(name: splashPage, page: ()=>const Splash()),
 
     GetPage(name: logIn, page: ()=>const LogInEmail(), transition: Transition.fadeIn),

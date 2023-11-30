@@ -29,12 +29,6 @@ class _RootAppState extends State<RootApp> {
       const HomePage(),
       const CartHistory(),
       const AddressPage(),
-      // const Center(
-      //   child: Text('Discover',
-      //     style: TextStyle(
-      //         fontSize: 15
-      //     ),),
-      // ),
       const ProfilePage()
     ];
   }

@@ -2,15 +2,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:snack_bar/helpers/router.dart';
-import 'package:snack_bar/validations/onboarding.dart';
 import 'package:sizer/sizer.dart';
-
-import '../data/controllers/cart_contoller.dart';
-import '../data/controllers/most_popular_ctlr.dart';
-import '../data/controllers/recommended_ctlr.dart';
-
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
 

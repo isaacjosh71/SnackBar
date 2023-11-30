@@ -28,16 +28,14 @@ class AuthController extends GetxController implements GetxService{
   }
 
   Future<ResponseModel> loginUser(LogInBody logInBody) async {
-    print("getting token");
-    print(authRepo.getUserToken().toString());
     _isLoading = true;
     update();
     Response response = await authRepo.loginUser(logInBody);
     late ResponseModel responseModel;
     if (response.statusCode == 200 || response.statusCode == 201){
-      print('Backend Token');
       authRepo.saveUserToken(response.body['token']);
-      print('My token is${response.body['token'].toString()}');
+      print('User token ${response.body['token'].toString()}');
+      print("getting token ${authRepo.getUserToken().toString()}");
       responseModel = ResponseModel(true, response.body['token']);
     }else{responseModel = ResponseModel(false, response.statusText!);}
     _isLoading = false;

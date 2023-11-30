@@ -11,7 +11,7 @@ import '../helpers/router.dart';
 class StoreCard extends StatefulWidget {
 
 
-   const StoreCard({
+  const StoreCard({
     Key? key,
   }) : super(key: key);
 
@@ -142,9 +142,9 @@ class _StoreCardState extends State<StoreCard> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Row(
+                    const Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(Icons.alarm, size: 17),
                         SizedBox(
                           width: 5,

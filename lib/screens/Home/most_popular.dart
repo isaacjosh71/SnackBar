@@ -1,5 +1,4 @@
-
-import 'package:badges/badges.dart';
+// import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/most_popular_ctlr.dart';
@@ -56,36 +55,36 @@ class _MostPopularState extends State<MostPopular> {
                 child: GetBuilder<MostPopularController>(builder: (mostPopularC){
                   return Stack(
                     children: [
-                    CircleAvatar(
-                    backgroundColor: Colors.white60,
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.add_shopping_cart_rounded,
-                        color: Color(0xFF2B3849),
-                        size: 24,
+                      CircleAvatar(
+                        backgroundColor: Colors.white60,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.add_shopping_cart_rounded,
+                            color: Color(0xFF2B3849),
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            if(mostPopularC.totalItems>=1){
+                              Get.toNamed(
+                                  RouteHelper.getCartPage());}
+                          },),
                       ),
-                      onPressed: () {
-                        if(mostPopularC.totalItems>=1){
-                          Get.toNamed(
-                            RouteHelper.getCartPage());}
-                      },),
-                  ),
                       mostPopularC.totalItems>=1?
-                   const Positioned(
-                    right:0, top:0,
-                    child: Icon(
-                    Icons.circle,
-                    color: Colors.redAccent,
-                    size: 19,
-                    ),
-                  )
+                      const Positioned(
+                        right:0, top:0,
+                        child: Icon(
+                          Icons.circle,
+                          color: Colors.redAccent,
+                          size: 19,
+                        ),
+                      )
                           :Container(),
                       Get.find<MostPopularController>().totalItems>=1?
                       Positioned(
                         right:5, top:1,
                         child: Text(Get.find<MostPopularController>().totalItems.toString(),
-                        style: const TextStyle(color: Colors.white, fontSize: 12
-                        ),
+                          style: const TextStyle(color: Colors.white, fontSize: 12
+                          ),
                         ),
                       ) :Container(),
                     ],
@@ -104,13 +103,13 @@ class _MostPopularState extends State<MostPopular> {
                 width: double.maxFinite,
                 decoration: const BoxDecoration(
                   color: Colors.white,
-                borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30)
-                ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)
+                  ),
                 ),
               ),
-    ),
+            ),
             pinned: true,
             backgroundColor: Colors.orangeAccent,
             stretch: true,
@@ -174,8 +173,8 @@ class _MostPopularState extends State<MostPopular> {
                                 fontWeight: FontWeight.w100,
                               ),
                             ),
-                            Row(
-                              children: const [
+                            const Row(
+                              children: [
                                 Icon(Icons.alarm, size: 17),
                                 SizedBox(
                                   width: 1,
@@ -201,11 +200,11 @@ class _MostPopularState extends State<MostPopular> {
                   ),
                   const SizedBox(height: 7),
                   const Text('INTRODUCE',
-                  style: TextStyle(
-                    color: Color(0xFF455A64),
-                    fontSize: 15,
-                    letterSpacing: 1.5
-                  ),),
+                    style: TextStyle(
+                        color: Color(0xFF455A64),
+                        fontSize: 15,
+                        letterSpacing: 1.5
+                    ),),
                   const SizedBox(
                     height: 10,
                   ),
