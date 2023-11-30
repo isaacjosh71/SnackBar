@@ -19,7 +19,7 @@ class CartHistory extends StatelessWidget {
     var getCartHistoryList = Get.find<CartController>().
     getCartHistoryList().reversed.toList();
     //sorting out cart history based on time per order
-    Map<String, int> cartItemsPerOrder = Map();
+    Map<String, int> cartItemsPerOrder = {};
     //just like continual entries for maps
     for(int i=0; i<getCartHistoryList.length; i++){
       //if identical time found, put

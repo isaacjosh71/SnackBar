@@ -1,12 +1,16 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:get/get.dart';
+import 'package:snack_bar/data/controllers/location_controller.dart';
+import 'package:snack_bar/data/controllers/user_controller.dart';
 import 'package:snack_bar/screens/Home/snack_categories.dart';
 import 'package:snack_bar/widgets/store_card.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:snack_bar/helpers/categories.dart';
+import '../../data/controllers/most_popular_ctlr.dart';
+import '../../data/controllers/recommended_ctlr.dart';
 import '../../widgets/dish_card.dart';
 import '../Customer_Service_Chat/chat_page.dart';
 
@@ -17,7 +21,20 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+Future<void> _loadResources() async{
+  await Get.find<MostPopularController>().getMostPopularList();
+  await Get.find<RecommendedController>().getRecommendedList();
+  await Get.find<UserController>().userInfo();
+}
+
 class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    //load api list init
+    _loadResources();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,186 +107,188 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getBody(){
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return RefreshIndicator(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 17, top: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AnimatedTextKit(
+                          animatedTexts: [
+                            WavyAnimatedText(
+                                'Welcome Back!',
+                                textAlign: TextAlign.justify,
+                                textStyle: const TextStyle(
+                                  color: Color(0xFF455A64),
+                                  fontSize: 32,
+                                )
+                            ),
+                          ],
+                          isRepeatingAnimation: false,
+                        ),
+                        SizedBox(height: 5,),
+                        const Text(
+                          'Kindly place an order',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+              Center(
+                child: TextFieldCase(
+                  child: Row(
+                    children: [
+                      const Flexible(
+                        child: TextField(
+                          cursorColor: Colors.black,
+                          showCursor: true,
+                          decoration: InputDecoration(
+                            hintText: 'Search',
+                            hintStyle: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 15,
+                            ),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon( Icons.search,
+                          color: Colors.orange,),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/search_menu");
+                        },),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               Padding(
-                padding: const EdgeInsets.only(left: 17, top: 30),
+                padding: const EdgeInsets.only(left: 18),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        WavyAnimatedText(
-                          'Welcome Back!',
-                          textAlign: TextAlign.justify,
-                          textStyle: const TextStyle(
-                            color: Color(0xFF455A64),
-                          fontSize: 32,
-                    )
-                          ),
-                      ],
-                      isRepeatingAnimation: false,
-                    ),
-                    SizedBox(height: 5,),
-                    const Text(
-                      'Kindly place an order',
-                      overflow: TextOverflow.ellipsis,
+                    const Text('Categories',
                       style: TextStyle(
-                        color: Colors.black87,
-                        fontSize: 18,
+                        fontSize: 23,
+                        color: Color(0xFF455A64),
+                      ),),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List.generate(snacks.length, (index)
+                          => Padding(
+                            padding: const EdgeInsets.only(left: 13),
+                            child: GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                    context,
+                                    PageTransition(
+                                        alignment: Alignment.bottomCenter,
+                                        child: SnackCategories(
+                                          snack: snacks[index],
+                                        ),
+                                        type: PageTransitionType.scale));
+                              },
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            snacks[index]['img']
+                                        ),
+                                      ),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 3,
+                                  ),
+                                  Text(snacks[index]['title'],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 17,
+                                        color: Colors.amber.shade400
+                                    ),),
+                                ],
+                              ),
+                            ),
+                          ),
+                          ),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 25,
+              ),
+              const SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15.0, top: 10, bottom: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Most Popular',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Color(0xFF455A64),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      StoreCard(),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Text('Recommended',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          color: Color(0xFF455A64),
+                        ),
+                      ),
+                      DishCard(),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
-          Center(
-            child: TextFieldCase(
-              child: Row(
-                children: [
-                  const Flexible(
-                    child: TextField(
-                      cursorColor: Colors.black,
-                      showCursor: true,
-                      decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 15,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon( Icons.search,
-                      color: Colors.orange,),
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/search_menu");
-                    },),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Categories',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Color(0xFF455A64),
-                ),),
-                const SizedBox(
-                  height: 10,
-                ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(snacks.length, (index)
-                      => Padding(
-                        padding: const EdgeInsets.only(left: 13),
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    alignment: Alignment.bottomCenter,
-                                    child: SnackCategories(
-                                      snack: snacks[index],
-                                    ),
-                                    type: PageTransitionType.scale));
-                          },
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 40,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            snacks[index]['img']
-                                        ),
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 3,
-                              ),
-                              Text(snacks[index]['title'],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 17,
-                                    color: Colors.amber.shade400
-                                ),),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15.0, top: 10, bottom: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text('Most Popular',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                        color: Color(0xFF455A64),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    StoreCard(),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Text('Recommended',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                        color: Color(0xFF455A64),
-                      ),
-                    ),
-                    DishCard(),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
+        ),
+        onRefresh: _loadResources);
   }
 }
 

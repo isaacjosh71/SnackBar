@@ -121,32 +121,33 @@ class _SlideState extends State<Slide> {
               ),
                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.055,
-                width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFFFFCC4B),
-                        Colors.orange,
-                      ]),
+              GestureDetector(
+                onTap: (){
+                  if (currentIndex == contents.length - 1){
+                    Get.offNamed(RouteHelper.getSignUpPage());
+                  }
+                  _controller.nextPage(duration: const Duration(milliseconds: 100),
+                      curve: Curves.bounceIn);
+                },
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.055,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFFFCC4B),
+                          Colors.orange,
+                        ]),
+                  ),
+                  child: Center(
+                    child: Text( currentIndex == contents.length -1
+                        ? 'Get Started' : 'Next',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white,
+                          fontSize: 20),),
+                  ),
                 ),
-                child: GestureDetector(
-                    child: Center(
-                      child: Text( currentIndex == contents.length -1
-                          ? 'Get Started' : 'Next',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white,
-                            fontSize: 20),),
-                    ),
-                    onTap: () {
-                      if (currentIndex == contents.length - 1){
-                        Get.offNamed(RouteHelper.getSignUpPage());
-                      }
-                      _controller.nextPage(duration: const Duration(milliseconds: 100),
-                          curve: Curves.bounceIn);
-                    }),
               ),
               SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02),

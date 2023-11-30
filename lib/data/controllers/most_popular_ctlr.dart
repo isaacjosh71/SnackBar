@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/repository/most_popular_repo.dart';
@@ -17,14 +16,16 @@ class MostPopularController extends GetxController{
 
   //get most popular products data
   Future<void>getMostPopularList() async{
-      Response response = await mostPopularRepo.getMostPopularList();
-      if (response.statusCode == 200){
-        _mostPopularList=[];
-        _mostPopularList.addAll(Product.fromJson(response.body).products);
-        _isLoaded = true;
-        update();
-      }else{
-      }
+    Response response = await mostPopularRepo.getMostPopularList();
+    if (response.statusCode == 200){
+      print('got products');
+      _mostPopularList=[];
+      _mostPopularList.addAll(Product.fromJson(response.body).products);
+      print(_mostPopularList);
+      _isLoaded = true;
+      update();
+    }else{
+    }
   }
 
   int _quantity = 0;
@@ -71,11 +72,11 @@ class MostPopularController extends GetxController{
 
   //add products from cart controller
   void addItem(ProductModel product){
-     _cart.addItem(product, _quantity);
-     _quantity=0;
-     _inCartItems=_cart.getQuantity(product);
-     _cart.items.forEach((key, value) {});
-     update();
+    _cart.addItem(product, _quantity);
+    _quantity=0;
+    _inCartItems=_cart.getQuantity(product);
+    _cart.items.forEach((key, value) {});
+    update();
   }
 
   //total products from cart controller
