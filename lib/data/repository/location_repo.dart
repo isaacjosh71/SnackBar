@@ -13,10 +13,14 @@ class LocationRepo{
 
   //get address from Geocode
   Future<Response> getAddressFromGeocode(LatLng latLng) async {
-    return await apiClient.getData('${AppConstants.GEOCODE_URI}'
-    '?lat=${latLng.latitude}&lng=${latLng.longitude}'
+    return await apiClient.getData('${AppConstants.GEOCODE_URI}?lat=${latLng.latitude}&lng=${latLng.longitude}'
     );
   }
+
+  //new endpoint when you enabled billing account, try this
+  // Future<Response> getAddressFromGeocode(LatLng latLng) async {
+  //   return await apiClient.getData('https://maps.googleapis.com/maps/api/geocode/json?latlng=6.508835,3.313712&key=AIzaSyC3B6Peo24Weab01DgIM5O8eyZxOORKKcI');
+  // }
 
   //send address to server
   Future<Response> addAddress(AddressModels addressModels) async{

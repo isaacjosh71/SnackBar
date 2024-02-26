@@ -317,7 +317,7 @@ class _CartPageState extends State<CartPage> {
                                                 subtitle: "Pay online",
                                                 index: 1),
                                             SizedBox(height: 20,),
-                                            Text('Additional Note', style: TextStyle(fontSize: 16),),
+                                            const Text('Additional Note', style: TextStyle(fontSize: 16),),
                                             TextFieldCase(child:
                                             Row(
                                               children: [

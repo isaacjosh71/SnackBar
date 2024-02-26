@@ -59,7 +59,8 @@ class LocationController extends GetxController implements GetxService{
       update();
       try{
         if(fromAddressPage){
-          _position = Position(longitude: position.target.longitude,
+          _position = Position(
+              longitude: position.target.longitude,
               latitude: position.target.latitude,
               timestamp: DateTime.now(),
               accuracy: 1,
@@ -107,7 +108,8 @@ class LocationController extends GetxController implements GetxService{
 
   //address gotten or updated from geocode
   Future<String> getAddressFromGeocode(LatLng latLng) async {
-    String _address = 'Unknown Location Found';
+    String _address = 'Loading...';
+    //create a billing account with the new api and postman request endpoint has been changed
     Response response = await locationRepo.getAddressFromGeocode(latLng);
     if(response.body["status"]=='OK'){
       _address = response.body["results"][0]['formatted_address'].toString();

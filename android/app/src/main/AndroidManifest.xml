@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.snack_bar">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
-        android:label="snack_bar"
+        android:label="Snack Bar"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -32,6 +35,6 @@
             android:value="2" />
        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCUuQQ1F77nkeiwb3hnPQBdIenaVnhWqB4"/>
+            android:value="AIzaSyC3B6Peo24Weab01DgIM5O8eyZxOORKKcI"/>
     </application>
 </manifest>

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class SnackCategories extends StatefulWidget {
   const SnackCategories({Key? key, this.snack}) : super(key: key);
@@ -12,6 +13,8 @@ class SnackCategories extends StatefulWidget {
 class _SnackCategoriesState extends State<SnackCategories> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const Scaffold(
+      body: Center(child: Text('Coming soon', style: TextStyle(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.w500),),),
+    );
   }
 }

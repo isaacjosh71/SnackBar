@@ -6,7 +6,6 @@ import 'package:snack_bar/data/controllers/cart_contoller.dart';
 import 'package:snack_bar/data/controllers/location_controller.dart';
 import 'package:snack_bar/data/controllers/user_controller.dart';
 import 'package:snack_bar/helpers/app_const.dart';
-import 'package:snack_bar/helpers/notifier.dart';
 import 'data/controllers/most_popular_ctlr.dart';
 import 'data/controllers/recommended_ctlr.dart';
 import 'package:firebase_core/firebase_core.dart';
